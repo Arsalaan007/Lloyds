@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solace — Where Life Finds Its Balance | Lloyds Realty</title>
+<meta name="description" content="Solace by Lloyds Realty. A residential tower on Bhawani Shankar Road, facing the sea.">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- grain / vignette overlay -->
+<div class="grain"></div>
+
+<!-- cursor dot -->
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- progress rail -->
+<div class="progress-rail"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-mark">SOLACE</a>
+    <div class="nav-links">
+      <a href="#architecture">Tower</a>
+      <a href="#amenities">Amenities</a>
+      <a href="#residences">Residences</a>
+      <a href="#enquire" class="nav-cta">Enquire</a>
+    </div>
+    <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#architecture">Tower</a>
+  <a href="#amenities">Amenities</a>
+  <a href="#residences">Residences</a>
+  <a href="#enquire">Enquire</a>
+</div>
+
+<main>
+
+  <!-- 1 :: HERO -->
+  <section class="section hero" id="hero" data-theme="dark">
+    <div class="hero-media">
+      <picture>
+        <source media="(max-width: 900px)" srcset="assets/hero-tower-dusk-mobile.jpg">
+        <img src="assets/hero-tower-dusk.jpg" alt="Solace tower at dusk, seen from the coast road" id="heroImg">
+      </picture>
+      <div class="hero-scrim"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Lloyds Realty presents</p>
+      <h1 class="hero-title">
+        <span class="line"><span>A residence</span></span>
+        <span class="line"><span>held in <em>balance.</em></span></span>
+      </h1>
+      <p class="hero-sub">Thirty-five storeys above Bhawani Shankar Road, where the city exhales into the sea.</p>
+    </div>
+    <div class="hero-foot">
+      <div class="hero-coords">18.9926° N · 72.8420° E</div>
+      <div class="scroll-cue">
+        <span>Scroll</span>
+        <div class="scroll-line"><div class="scroll-line-fill"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HORIZON DIVIDER (signature svg moment) -->
+  <div class="horizon-wrap">
+    <svg class="horizon-svg" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true">
+      <circle class="horizon-sun" cx="600" cy="70" r="34"></circle>
+      <path class="horizon-line" d="M0,100 C 150,60 300,140 450,100 C 600,60 750,140 900,100 C 1000,76 1100,76 1200,100" />
+    </svg>
+  </div>
+
+  <!-- 2 :: MANIFESTO -->
+  <section class="section manifesto" id="manifesto" data-theme="dark">
+    <div class="manifesto-inner">
+      <p class="manifesto-kicker">The name</p>
+      <p class="manifesto-text">
+        Solace isn't a feeling you chase. It's a place you return to —
+        a home tuned to the rhythm of the sea it faces, built for the
+        quiet after a long day and the calm before the next.
+      </p>
+      <p class="manifesto-text manifesto-text--small">
+        Every floor plan, every deck, every material was chosen with
+        one question in mind: does this help life find its balance?
+      </p>
+    </div>
+  </section>
+
+  <!-- 3 :: ARCHITECTURE (pinned parallax) -->
+  <section class="section architecture" id="architecture" data-theme="light">
+    <div class="arch-pin">
+      <div class="arch-media">
+        <img src="assets/elevation-day.jpg" alt="Full elevation of the Solace tower in daylight" id="archImg">
+      </div>
+      <div class="arch-copy">
+        <p class="arch-kicker">01 — The tower</p>
+        <h2 class="arch-title">Thirty-five floors,<br>one silhouette.</h2>
+        <p class="arch-desc">Solace rises as a single, uninterrupted line above Bhawani Shankar Road — a
+          tower designed to be read from the coast as clearly as it reads from within.</p>
+        <div class="arch-stats">
+          <div class="arch-stat">
+            <span class="arch-stat-num" data-count="35">0</span>
+            <span class="arch-stat-label">Floors</span>
+          </div>
+          <div class="arch-stat">
+            <span class="arch-stat-num" data-count="3">0</span>
+            <span class="arch-stat-label">Configurations</span>
+          </div>
+          <div class="arch-stat">
+            <span class="arch-stat-num" data-count="2">0</span>
+            <span class="arch-stat-label">Refuge decks</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 :: AMENITIES INTRO -->
+  <section class="section amenity-intro" id="amenities" data-theme="light">
+    <p class="amenity-intro-kicker">02 — Amenities</p>
+    <h2 class="amenity-intro-title">The building does<br>the rest of the work.</h2>
+  </section>
+
+  <!-- 4a :: POOL (day/dusk split reveal) -->
+  <section class="section pool" data-theme="light">
+    <div class="pool-frame">
+      <div class="pool-layer pool-layer--day">
+        <img src="assets/pool-day.jpg" alt="Rooftop infinity pool by day">
+      </div>
+      <div class="pool-layer pool-layer--dusk" id="poolDusk">
+        <img src="assets/pool-dusk.jpg" alt="Rooftop infinity pool at dusk">
+      </div>
+      <div class="pool-divider" id="poolDivider"></div>
+    </div>
+    <div class="pool-copy">
+      <p class="pool-kicker">Sky deck</p>
+      <h3 class="pool-title">A pool that never<br>faces the road.</h3>
+      <p class="pool-desc">The infinity edge holds the skyline instead — from first light to
+        the last hour of the evening.</p>
+    </div>
+  </section>
+
+  <!-- 4b :: WELLNESS -->
+  <section class="section feature feature--wellness" data-theme="dark">
+    <div class="feature-media">
+      <div class="wellness-stack">
+        <img src="assets/gym.jpg" alt="Gymnasium with treadmills and free weights">
+        <img src="assets/billiards-lounge.jpg" alt="Billiards lounge overlooking the skyline">
+        <img src="assets/kids-play-garden.jpg" alt="Children's play area and seating garden">
+        <img src="assets/games-room.jpg" alt="Games room with carrom and foosball tables">
+      </div>
+    </div>
+    <div class="feature-copy feature-copy--right">
+      <p class="feature-kicker">Wellness deck</p>
+      <h3 class="feature-title">Movement, <br>built in.</h3>
+      <p class="feature-desc">A full gymnasium, a billiards room, and a garden built for the
+        youngest residents — movement, in every form the day calls for.</p>
+    </div>
+  </section>
+
+  <!-- 4d :: MORE OF THE SKY DECK -->
+  <section class="section pool-more" data-theme="dark">
+    <div class="pool-more-head">
+      <p class="pool-more-kicker">Sky deck</p>
+      <h2 class="pool-more-title">More of the view.</h2>
+    </div>
+    <div class="pool-more-gallery">
+      <figure class="pool-more-item">
+        <img src="assets/pool-family-deck.jpg" alt="Family relaxing by the rooftop pool with the skyline behind them">
+        <figcaption>Poolside, any hour of the day.</figcaption>
+      </figure>
+      <figure class="pool-more-item">
+        <img src="assets/pool-aerial.jpg" alt="Aerial view of the cantilevered rooftop infinity pool">
+        <figcaption>The infinity edge, from above.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 4e :: LOBBY AREA -->
+  <section class="section lobby-area" data-theme="light">
+    <div class="lobby-area-head">
+      <h2 class="lobby-area-title">Lobby Area</h2>
+    </div>
+    <div class="lobby-area-gallery">
+      <div class="lobby-area-item">
+        <img src="assets/lobby-reception.jpg" alt="Double-height lobby with reception desk and living green wall">
+      </div>
+      <div class="lobby-area-item">
+        <img src="assets/lobby-seating.jpg" alt="Lobby seating area with marble flooring and sculptural pendant lighting">
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 :: RESIDENCES -->
+  <section class="section residences" id="residences" data-theme="light">
+    <div class="res-head">
+      <p class="res-kicker">03 — Residences</p>
+      <h2 class="res-title">Choose your line<br>on the skyline.</h2>
+    </div>
+
+    <div class="res-tabs" role="tablist">
+      <button class="res-tab is-active" data-target="1bhk">1 BHK</button>
+      <button class="res-tab" data-target="2bhk">2 BHK</button>
+      <button class="res-tab" data-target="3bhk">3 BHK</button>
+    </div>
+
+    <div class="res-panels">
+
+      <div class="res-panel is-active" data-panel="1bhk">
+        <div class="res-panel-media">
+          <img src="assets/unit-1bhk.jpg" alt="1 BHK floor plan, floors 16 to 35">
+          <button class="zoom-btn" type="button" aria-label="Zoom into 1 BHK floor plan">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6"/><line x1="16.2" y1="16.2" x2="21" y2="21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><line x1="11" y1="8" x2="11" y2="14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><line x1="8" y1="11" x2="14" y2="11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="res-panel-info">
+          <span class="res-floor">Floors 16 – 35</span>
+          <ul class="res-specs">
+            <li><span>Carpet area</span><span>476 sq. ft.</span></li>
+            <li><span>RERA area</span><span>499 sq. ft.</span></li>
+            <li><span>Layout</span><span>Living · Bedroom · Deck</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="res-panel" data-panel="2bhk">
+        <div class="res-panel-media">
+          <img src="assets/unit-2bhk.jpg" alt="2 BHK floor plan, various floors">
+          <button class="zoom-btn" type="button" aria-label="Zoom into 2 BHK floor plan">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6"/><line x1="16.2" y1="16.2" x2="21" y2="21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><line x1="11" y1="8" x2="11" y2="14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><line x1="8" y1="11" x2="14" y2="11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="res-panel-info">
+          <span class="res-floor">Floors 12, 14–17 &amp; 21–35</span>
+          <ul class="res-specs">
+            <li><span>Carpet area</span><span>736 sq. ft.</span></li>
+            <li><span>RERA area</span><span>780 sq. ft.</span></li>
+            <li><span>Layout</span><span>2 Bedrooms · 2 Decks</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="res-panel" data-panel="3bhk">
+        <div class="res-panel-media">
+          <img src="assets/unit-3bhk-1109.jpg" alt="3 BHK floor plan, floors 31 to 35">
+          <button class="zoom-btn" type="button" aria-label="Zoom into 3 BHK floor plan">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6"/><line x1="16.2" y1="16.2" x2="21" y2="21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><line x1="11" y1="8" x2="11" y2="14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><line x1="8" y1="11" x2="14" y2="11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="res-panel-info">
+          <span class="res-floor">Floors 31 – 35</span>
+          <ul class="res-specs">
+            <li><span>Carpet area</span><span>1,052 sq. ft.</span></li>
+            <li><span>RERA area</span><span>1,109 sq. ft.</span></li>
+            <li><span>Layout</span><span>3 Bedrooms · 4 Decks</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 6 :: CTA / ENQUIRE -->
+  <section class="section enquire" id="enquire" data-theme="dark">
+    <div class="enquire-inner">
+      <p class="enquire-kicker">04 — Begin</p>
+      <h2 class="enquire-title">Come see it<br>for yourself.</h2>
+      <p class="enquire-sub">Site visits are by appointment. Leave your details and the
+        sales team will call within the day.</p>
+
+      <form class="enquire-form" id="enquireForm">
+        <div class="field">
+          <input type="text" id="fname" name="name" required placeholder=" ">
+          <label for="fname">Full name</label>
+        </div>
+        <div class="field">
+          <input type="tel" id="fphone" name="phone" required placeholder=" ">
+          <label for="fphone">Phone number</label>
+        </div>
+        <div class="field">
+          <input type="email" id="femail" name="email" placeholder=" ">
+          <label for="femail">Email (optional)</label>
+        </div>
+        <button type="submit" class="enquire-submit">Request a site visit</button>
+      </form>
+      <p class="enquire-note" id="enquireNote" hidden>Your email app should now be open with the details filled in — just hit send to complete your request.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <img src="assets/logo-mark.png" alt="Solace" class="footer-logo">
+      <nav class="footer-links">
+        <a href="#architecture">Tower</a>
+        <a href="#amenities">Amenities</a>
+        <a href="#residences">Residences</a>
+        <a href="#enquire">Enquire</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>A Lloyds Realty development</span>
+      <span>RERA details available on request</span>
+    </div>
+  </footer>
+
+</main>
+
+<!-- IMAGE LIGHTBOX (zoom / pan viewer) -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none"><line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="19" y1="5" x2="5" y2="19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+  <div class="lightbox-stage" id="lightboxStage">
+    <img src="" alt="" id="lightboxImg" draggable="false">
+  </div>
+  <div class="lightbox-hint" id="lightboxHint">Scroll or pinch to zoom · Drag to pan · Double-click to reset</div>
+</div>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
