@@ -265,6 +265,25 @@ body.menu-open{overflow:hidden;}
   font-size:13px;letter-spacing:0.03em;opacity:0.6;
 }
 
+/* ============ VISIT OUR WEBSITE ============ */
+.visit-site{
+  background:var(--black);color:var(--white);
+  display:flex;align-items:center;
+  min-height:72vh;padding:6vw 5vw;
+}
+.visit-site-link{
+  display:grid;grid-template-columns:0.85fr 1.15fr;align-items:center;gap:3vw;
+  width:100%;transition:opacity 0.3s ease;
+}
+.visit-site-link:hover,.visit-site-link:focus-visible{opacity:0.85;}
+.visit-site-link:focus-visible{outline:2px solid var(--white);outline-offset:8px;}
+.visit-site-copy{display:flex;flex-direction:column;justify-content:center;}
+.visit-site-kicker{font-size:13px;letter-spacing:0.14em;opacity:0.55;margin-bottom:20px;}
+.visit-site-title{font-family:var(--serif);font-weight:400;font-size:clamp(32px,5vw,64px);line-height:1.08;margin-bottom:24px;}
+.visit-site-desc{font-size:clamp(15px,1.1vw,18px);line-height:1.7;max-width:36ch;font-weight:300;opacity:0.82;}
+.visit-site-media{display:flex;justify-content:flex-end;align-items:center;}
+.visit-site-media img{width:100%;max-width:clamp(380px,40vw,680px);height:auto;display:block;}
+
 /* ============ LOBBY AREA ============ */
 .lobby-area{background:var(--white);padding:4vw 5vw 8vw;}
 .lobby-area-head{text-align:center;margin-bottom:4vw;}
@@ -443,6 +462,12 @@ body.menu-open{overflow:hidden;}
   .footer-links{gap:24px;font-size:12.5px;}
   .pool-copy{flex-direction:column;align-items:flex-start;}
   .lobby-area-gallery{grid-template-columns:1fr;gap:16px;}
+  .visit-site{padding:14vw 6vw;min-height:0;}
+  .visit-site-link{grid-template-columns:1fr;gap:8vw;}
+  .visit-site-media{order:2;justify-content:center;}
+  .visit-site-copy{order:1;text-align:center;align-items:center;}
+  .visit-site-desc{max-width:36ch;margin-left:auto;margin-right:auto;}
+  .visit-site-media img{max-width:480px;}
 }
 
 /* Small phones */

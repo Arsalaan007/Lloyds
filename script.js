@@ -148,6 +148,7 @@ const revealTargets = [
   '.pool-copy',
   '.feature-kicker', '.feature-desc',
   '.pool-more-kicker', '.pool-more-title',
+  '.visit-site-kicker', '.visit-site-title', '.visit-site-desc',
   '.lobby-area-title',
   '.res-kicker', '.res-tabs',
   '.enquire-kicker', '.enquire-sub', '.enquire-form'
@@ -263,6 +264,7 @@ wipeReveal('#archImg', { trigger: '.arch-media', duration: 1.3 });
 wipeReveal('.pool-frame', { duration: 1.2 });
 wipeReveal('.wellness-stack img', { trigger: '.wellness-stack', stagger: 0.12, duration: 1 });
 wipeReveal('.pool-more-item img', { trigger: '.pool-more-gallery', stagger: 0.15, duration: 1.2 });
+wipeReveal('.visit-site-media img', { trigger: '.visit-site-media', duration: 1.1 });
 wipeReveal('.lobby-area-item img', { trigger: '.lobby-area-gallery', stagger: 0.15, duration: 1.2 });
 wipeReveal('.res-panel.is-active .res-panel-media img', { trigger: '.residences', duration: 1.1 });
 
