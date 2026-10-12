@@ -479,6 +479,9 @@ body.menu-open{overflow:hidden;}
   .nav-mark{font-size:17px;}
   .res-tabs{max-width:100%;}
   .footer-bottom{flex-direction:column;gap:8px;}
+  /* Visit our Website: single line on phones only */
+  .visit-site-title br{display:none;}
+  .visit-site-title{font-size:clamp(28px,9vw,40px);white-space:nowrap;}
 }
 
 /* Very large / ultra-wide desktop monitors: cap line-lengths so text
