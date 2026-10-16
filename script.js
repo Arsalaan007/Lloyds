@@ -150,6 +150,7 @@ const revealTargets = [
   '.pool-more-kicker', '.pool-more-title',
   '.visit-site-kicker', '.visit-site-title', '.visit-site-desc',
   '.lobby-area-title',
+  '.am-kicker', '.am-group-title',
   '.res-kicker', '.res-tabs',
   '.enquire-kicker', '.enquire-sub', '.enquire-form'
 ];
@@ -195,7 +196,7 @@ function wrapWordsForStagger(el) {
 
 const titleSelectors = [
   '.arch-title', '.amenity-intro-title', '.pool-title',
-  '.feature-title', '.res-title', '.enquire-title'
+  '.feature-title', '.am-title', '.res-title', '.enquire-title'
 ];
 titleSelectors.forEach(sel => {
   document.querySelectorAll(sel).forEach(el => {
@@ -204,6 +205,14 @@ titleSelectors.forEach(sel => {
       yPercent: 0, opacity: 1, duration: 0.7, ease: 'power3.out', stagger: 0.045,
       scrollTrigger: { trigger: el, start: 'top 88%' }
     });
+  });
+});
+
+/* amenities: staggered rise for icon tiles and list rows */
+document.querySelectorAll('.am-icons, .am-list').forEach(group => {
+  gsap.fromTo(group.children, { opacity: 0, y: 26 }, {
+    opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.06,
+    scrollTrigger: { trigger: group, start: 'top 88%' }
   });
 });
 
