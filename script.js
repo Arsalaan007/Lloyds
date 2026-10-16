@@ -216,6 +216,12 @@ document.querySelectorAll('.am-icons, .am-list').forEach(group => {
   });
 });
 
+/* amenity icons only animate while their section is on screen */
+ScrollTrigger.create({
+  trigger: '.am-section', start: 'top bottom', end: 'bottom top',
+  toggleClass: { targets: '.am-section', className: 'is-live' }
+});
+
 /* stat counters */
 document.querySelectorAll('.arch-stat-num').forEach(el => {
   const target = parseInt(el.dataset.count, 10);
