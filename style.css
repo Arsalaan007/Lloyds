@@ -117,8 +117,8 @@ body.menu-open{overflow:hidden;}
 }
 .hero-content{position:relative;z-index:2;padding:0 5vw 4vw;color:var(--white);}
 .hero-eyebrow{
-  font-size:13px;letter-spacing:0.14em;color:rgba(255,255,255,0.75);
-  margin-bottom:18px;overflow:hidden;
+  font-size:clamp(15px,1.3vw,20px);letter-spacing:0.14em;color:rgba(255,255,255,0.92);
+  margin-bottom:20px;overflow:hidden;
 }
 .hero-title{
   font-family:var(--serif);font-weight:400;
