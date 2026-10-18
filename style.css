@@ -592,3 +592,9 @@ body.menu-open{overflow:hidden;}
 @media(prefers-reduced-motion:reduce){
   *{animation:none !important;transition:none !important;}
 }
+
+/* mobile: taller enquire section */
+@media(max-width:560px){.enquire{padding-top:calc(7vw + 68px);padding-bottom:calc(6vw + 68px);}}
+
+/* residences: extra space below the floor plans */
+.residences{padding-bottom:calc(8vw + 80px);}
