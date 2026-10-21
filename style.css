@@ -159,7 +159,7 @@ body.menu-open{overflow:hidden;}
   min-height:78vh;display:flex;align-items:center;justify-content:center;
   padding:8vw 5vw 12vw;
 }
-.manifesto-inner{max-width:820px;text-align:center;}
+.manifesto-inner{max-width:980px;text-align:center;}
 .manifesto-kicker{
   font-size:13px;letter-spacing:0.14em;color:rgba(255,255,255,0.55);margin-bottom:28px;
 }
@@ -167,6 +167,7 @@ body.menu-open{overflow:hidden;}
   font-family:var(--serif);font-weight:400;
   font-size:clamp(24px, 3.2vw, 50px);line-height:1.28;letter-spacing:0.002em;
 }
+.manifesto-text--about{font-size:clamp(20px,2.3vw,34px);line-height:1.45;}
 .manifesto-text--small{
   margin-top:34px;font-size:clamp(16px,1.6vw,22px);color:rgba(255,255,255,0.62);
   max-width:56ch;margin-left:auto;margin-right:auto;line-height:1.6;
