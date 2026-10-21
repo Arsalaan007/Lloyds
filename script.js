@@ -147,7 +147,7 @@ const revealTargets = [
   '.amenity-intro-kicker',
   '.pool-copy',
   '.feature-kicker', '.feature-desc',
-  '.pool-more-kicker', '.pool-more-title',
+  '.pool-more-kicker', '.pool-more-title', '.pool-more-desc', '.img-note',
   '.visit-site-kicker', '.visit-site-title', '.visit-site-desc',
   '.lobby-area-title',
   '.am-kicker', '.am-group-title',

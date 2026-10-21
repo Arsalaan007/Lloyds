@@ -256,6 +256,8 @@ body.menu-open{overflow:hidden;}
 /* ============ MORE OF THE SKY DECK (extra pool gallery) ============ */
 .pool-more{background:var(--black);color:var(--white);padding:8vw 5vw 4vw;}
 .pool-more-head{text-align:center;margin-bottom:5vw;}
+.pool-more-desc{max-width:none;width:100%;margin:26px auto 0;font-size:clamp(14px,1.2vw,18px);line-height:1.75;opacity:.75;}
+.pool-more-desc--bold{margin-top:18px;opacity:1;font-weight:400;}
 .pool-more-kicker{font-size:13px;letter-spacing:0.14em;opacity:0.55;margin-bottom:20px;}
 .pool-more-title{font-family:var(--serif);font-weight:400;font-size:clamp(32px,5vw,64px);line-height:1.08;}
 .pool-more-gallery{display:flex;flex-direction:column;max-width:1400px;margin:0 auto;}
@@ -599,3 +601,26 @@ body.menu-open{overflow:hidden;}
 
 /* residences: extra space below the floor plans */
 .residences{padding-bottom:calc(8vw + 80px);}
+
+/* image notes: headline + paragraph + tagline under an image */
+.img-note{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:12px;padding:26px 0 8px;}
+.pool-more-item figcaption.img-note{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;text-align:left;height:auto;min-height:0;opacity:1;font-size:inherit;letter-spacing:0;padding:30px 0 12px;}
+.img-note-head{font-family:var(--serif);font-weight:400;font-size:clamp(22px,2.4vw,36px);line-height:1.2;}
+.img-note-body{font-size:clamp(13px,1.05vw,15px);line-height:1.7;max-width:64ch;opacity:.7;}
+.img-note-tag{font-size:clamp(13px,1.05vw,15px);font-weight:600;letter-spacing:0.02em;}
+.img-note-head{text-wrap:balance;}
+.pool-more-desc--bold strong{font-weight:700;}
+.pool-more-item .img-note-body{max-width:none;width:100%;}
+.pool-more-item figcaption.img-note{align-items:center;text-align:center;}
+.pool-more-item .img-note-head{text-wrap:balance;}
+/* unified type scale for the Elevate Your Everyday block and the living-room note */
+.pool-more-title,.pool-more-item .img-note-head{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.8vw,54px);line-height:1.12;}
+.pool-more-desc,.pool-more-item .img-note-body,.pool-more-item .img-note-tag{font-size:clamp(14px,1.25vw,18px);line-height:1.75;}
+.pool-more-item .img-note-body{opacity:.75;}
+.pool-more-item .img-note{gap:18px;}
+.pool-more-item figcaption[aria-hidden="true"]{height:calc(max(4vw,56px) - 30px);min-height:0;}
+/* larger side margins for the Elevate description and the living-room note */
+.pool-more-desc,.pool-more-item .img-note-body,.pool-more-item .img-note-head{max-width:72%;margin-left:auto;margin-right:auto;}
+@media(max-width:900px){.pool-more-desc,.pool-more-item .img-note-body,.pool-more-item .img-note-head{max-width:88%;}}
+@media(max-width:560px){.pool-more-desc,.pool-more-item .img-note-body,.pool-more-item .img-note-head{max-width:100%;}}
+.pool-more{padding-top:calc(8vw + 80px);}
