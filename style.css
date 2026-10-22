@@ -665,3 +665,11 @@ body.menu-open{overflow:hidden;}
 @media(min-width:901px){
   .feature--wellness .feature-copy{top:0;min-height:100vh;box-sizing:border-box;}
 }
+/* amenity icons: warm gold colour on hover */
+.am-icon{transition:color .35s ease,scale .35s ease,filter .35s ease;}
+.am-label{transition:color .35s ease;}
+@media(hover:hover){
+  .am-item{cursor:default;}
+  .am-item:hover .am-icon{color:#e2b866;scale:1.14;filter:drop-shadow(0 0 9px rgba(226,184,102,.38));}
+  .am-item:hover .am-label{color:#fff;}
+}
