@@ -644,3 +644,24 @@ body.menu-open{overflow:hidden;}
 }
 @media(max-width:560px){.lobby-area{padding-top:56px;}.lobby-area-head{margin-bottom:36px;}}
 @media(max-width:560px){.residences{padding-top:calc(12vw + 40px);}}
+.retail-podium{padding-top:clamp(40px,6vw,96px);}
+/* living-room text: equal space above (from the image) and below (to the sunset image) */
+.pool-more{padding-bottom:0;}
+.pool-more-item figcaption.img-note{padding-top:clamp(56px,6vw,96px);padding-bottom:0;}
+.sunset-view{padding-top:clamp(56px,6vw,96px);}
+/* Elevate text: equal space above (from the retail image) and below (to the first pool image) */
+.pool-more{padding-top:clamp(56px,8vw,128px);}
+.pool-more-head{margin-bottom:clamp(56px,8vw,128px);}
+/* wellness copy: longer text */
+.feature--wellness .feature-title{font-size:clamp(26px,2.8vw,42px);line-height:1.15;}
+.feature--wellness .feature-desc{font-size:clamp(14px,1.05vw,16px);max-width:none;}
+.feature-bold{font-weight:700;color:var(--white);}
+/* wellness text (stacked layouts): equal space above (from the images) and below (to the retail image) */
+@media(max-width:900px){
+  .feature--wellness .feature-copy{padding-top:clamp(56px,8vw,96px);padding-bottom:clamp(56px,8vw,96px);}
+  .feature--wellness + .retail-podium{padding-top:0;}
+}
+/* wellness text (side-by-side layout): pinned and vertically centred in the viewport, so space above and below matches */
+@media(min-width:901px){
+  .feature--wellness .feature-copy{top:0;min-height:100vh;box-sizing:border-box;}
+}
