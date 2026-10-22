@@ -673,3 +673,4 @@ body.menu-open{overflow:hidden;}
   .am-item:hover .am-icon{color:#e2b866;scale:1.14;filter:drop-shadow(0 0 9px rgba(226,184,102,.38));}
   .am-item:hover .am-label{color:#fff;}
 }
+.visit-site{overflow-x:clip;}

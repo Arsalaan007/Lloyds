@@ -279,12 +279,31 @@ wipeReveal('#archImg', { trigger: '.arch-media', duration: 1.3 });
 wipeReveal('.pool-frame', { duration: 1.2 });
 wipeReveal('.wellness-stack img', { trigger: '.wellness-stack', stagger: 0.12, duration: 1 });
 wipeReveal('.pool-more-item img', { trigger: '.pool-more-gallery', stagger: 0.15, duration: 1.2 });
-wipeReveal('.visit-site-media img', { trigger: '.visit-site-media', duration: 1.1 });
+/* visit-site image: slides in from the right */
+(function () {
+  const img = document.querySelector('.visit-site-media img');
+  if (!img) return;
+  if (!desktopOnlyMotion()) return;
+  gsap.fromTo(img,
+    { x: '22vw', opacity: 0 },
+    {
+      x: 0, opacity: 1, duration: 1.4, ease: 'power3.out', clearProps: 'transform',
+      scrollTrigger: { trigger: '.visit-site-media', start: 'top 85%', once: true }
+    });
+})();
+/* entrance animations for the retail, sunset and visit-site images run on desktop (mouse + wide screen) only,
+   never on tablets or phones, and never with reduced motion */
+function desktopOnlyMotion() {
+  if (!window.matchMedia) return false;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+  return window.matchMedia('(min-width: 1101px) and (hover: hover) and (pointer: fine)').matches;
+}
+
 /* "lights on" entrance for the retail and sunset images: fades up from a dim dusk tone to full brightness with a soft rise */
 function lightsOn(imgSelector, triggerSelector) {
   const img = document.querySelector(imgSelector);
   if (!img) return;
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!desktopOnlyMotion()) return;
   gsap.fromTo(img,
     { opacity: 0, y: 36, scale: 1.03, filter: 'brightness(0.4) saturate(0.65)' },
     {
