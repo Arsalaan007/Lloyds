@@ -268,6 +268,11 @@ body.menu-open{overflow:hidden;}
   font-size:13px;letter-spacing:0.03em;opacity:0.6;
 }
 
+/* ============ SUNSET VIEW ============ */
+.sunset-view{background:var(--black);padding:4vw 0 0;}
+.sunset-view-media{width:100%;margin:0;overflow:hidden;}
+.sunset-view-media img{width:100%;height:auto;display:block;}
+
 /* ============ VISIT OUR WEBSITE ============ */
 .visit-site{
   background:var(--black);color:var(--white);
