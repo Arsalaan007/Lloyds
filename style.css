@@ -631,3 +631,4 @@ body.menu-open{overflow:hidden;}
 .pool-more{padding-top:calc(8vw + 80px);}
 @media(max-width:560px){.pool-more-item figcaption[aria-hidden="true"]{height:3px;min-height:0;}}
 .pool-more-bold{font-weight:700;color:var(--white);}
+@media(max-width:560px){.pool-more{padding-top:56px;}.pool-more-head{margin-bottom:56px;}}
