@@ -280,8 +280,22 @@ wipeReveal('.pool-frame', { duration: 1.2 });
 wipeReveal('.wellness-stack img', { trigger: '.wellness-stack', stagger: 0.12, duration: 1 });
 wipeReveal('.pool-more-item img', { trigger: '.pool-more-gallery', stagger: 0.15, duration: 1.2 });
 wipeReveal('.visit-site-media img', { trigger: '.visit-site-media', duration: 1.1 });
-wipeReveal('.retail-podium-media img', { trigger: '.retail-podium-media', duration: 1.1 });
-wipeReveal('.sunset-view-media img', { trigger: '.sunset-view-media', duration: 1.1 });
+/* "lights on" entrance for the retail and sunset images: fades up from a dim dusk tone to full brightness with a soft rise */
+function lightsOn(imgSelector, triggerSelector) {
+  const img = document.querySelector(imgSelector);
+  if (!img) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  gsap.fromTo(img,
+    { opacity: 0, y: 36, scale: 1.03, filter: 'brightness(0.4) saturate(0.65)' },
+    {
+      opacity: 1, y: 0, scale: 1, filter: 'brightness(1) saturate(1)',
+      duration: 1.7, ease: 'power2.out', clearProps: 'filter,transform',
+      scrollTrigger: { trigger: triggerSelector, start: 'top 82%', once: true }
+    });
+}
+lightsOn('.retail-podium-media img', '.retail-podium-media');
+lightsOn('.sunset-view-media img', '.sunset-view-media');
+
 wipeReveal('.lobby-area-item img', { trigger: '.lobby-area-gallery', stagger: 0.15, duration: 1.2 });
 wipeReveal('.res-panel.is-active .res-panel-media img', { trigger: '.residences', duration: 1.1 });
 
