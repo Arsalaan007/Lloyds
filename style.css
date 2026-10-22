@@ -375,6 +375,11 @@ body.menu-open{overflow:hidden;}
 @keyframes am-tap{0%,60%,100%{transform:rotate(0)}30%{transform:rotate(-14deg)}}
 @media(prefers-reduced-motion:reduce){.am-a-ball{display:none;}}
 
+/* ============ RETAIL PODIUM ============ */
+.retail-podium{background:var(--black);padding:0;}
+.retail-podium-media{width:100%;margin:0;overflow:hidden;}
+.retail-podium-media img{width:100%;height:auto;display:block;}
+
 /* ============ RESIDENCES ============ */
 .residences{background:var(--white);padding:12vw 5vw 8vw;}
 .res-head{text-align:center;margin-bottom:56px;}
@@ -624,3 +629,5 @@ body.menu-open{overflow:hidden;}
 @media(max-width:900px){.pool-more-desc,.pool-more-item .img-note-body,.pool-more-item .img-note-head{max-width:88%;}}
 @media(max-width:560px){.pool-more-desc,.pool-more-item .img-note-body,.pool-more-item .img-note-head{max-width:100%;}}
 .pool-more{padding-top:calc(8vw + 80px);}
+@media(max-width:560px){.pool-more-item figcaption[aria-hidden="true"]{height:3px;min-height:0;}}
+.pool-more-bold{font-weight:700;color:var(--white);}

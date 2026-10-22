@@ -280,6 +280,7 @@ wipeReveal('.pool-frame', { duration: 1.2 });
 wipeReveal('.wellness-stack img', { trigger: '.wellness-stack', stagger: 0.12, duration: 1 });
 wipeReveal('.pool-more-item img', { trigger: '.pool-more-gallery', stagger: 0.15, duration: 1.2 });
 wipeReveal('.visit-site-media img', { trigger: '.visit-site-media', duration: 1.1 });
+wipeReveal('.retail-podium-media img', { trigger: '.retail-podium-media', duration: 1.1 });
 wipeReveal('.lobby-area-item img', { trigger: '.lobby-area-gallery', stagger: 0.15, duration: 1.2 });
 wipeReveal('.res-panel.is-active .res-panel-media img', { trigger: '.residences', duration: 1.1 });
 
