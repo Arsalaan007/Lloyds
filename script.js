@@ -277,7 +277,18 @@ function wipeReveal(selector, { trigger, stagger = 0, duration = 1.1 } = {}) {
 
 wipeReveal('#archImg', { trigger: '.arch-media', duration: 1.3 });
 wipeReveal('.pool-frame', { duration: 1.2 });
-wipeReveal('.wellness-stack img', { trigger: '.wellness-stack', stagger: 0.12, duration: 1 });
+if (desktopOnlyMotion()) {
+  /* desktop: each wellness image wipes in on its own scroll position */
+  document.querySelectorAll('.wellness-stack img').forEach(img => {
+    gsap.set(img, { clipPath: 'inset(0% 100% 0% 0%)' });
+    gsap.to(img, {
+      clipPath: 'inset(0% 0% 0% 0%)', duration: 1, ease: 'power3.inOut',
+      scrollTrigger: { trigger: img, start: 'top 85%', once: true }
+    });
+  });
+} else {
+  wipeReveal('.wellness-stack img', { trigger: '.wellness-stack', stagger: 0.12, duration: 1 });
+}
 wipeReveal('.pool-more-item img', { trigger: '.pool-more-gallery', stagger: 0.15, duration: 1.2 });
 /* visit-site image: slides in from the right */
 (function () {
