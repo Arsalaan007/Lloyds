@@ -674,3 +674,17 @@ body.menu-open{overflow:hidden;}
   .am-item:hover .am-label{color:#fff;}
 }
 .visit-site{overflow-x:clip;}
+
+/* sunset-view carousel: crossfade, same frame as the single image (2300x1295) */
+.sv-carousel{position:relative;}
+.sv-track{position:relative;width:100%;aspect-ratio:2300/1295;overflow:hidden;background:var(--black);}
+.sv-slide{position:absolute;inset:0;width:100%;height:100%!important;object-fit:cover;opacity:0;transition:opacity 1.2s ease;}
+.sv-slide.is-active{opacity:1;z-index:1;}
+.sv-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.45);background:rgba(0,0,0,.35);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px);transition:background .3s,border-color .3s;}
+.sv-arrow:hover{background:rgba(0,0,0,.65);border-color:#fff;}
+.sv-prev{left:clamp(12px,2vw,32px);}.sv-next{right:clamp(12px,2vw,32px);}
+.sv-dots{position:absolute;left:0;right:0;bottom:clamp(12px,2vw,28px);z-index:3;display:flex;justify-content:center;gap:10px;}
+.sv-dots button{width:9px;height:9px;padding:0;border-radius:50%;border:1px solid #fff;background:transparent;cursor:pointer;transition:background .3s;}
+.sv-dots button.is-active{background:#fff;}
+@media(max-width:560px){.sv-arrow{width:36px;height:36px;}.sv-arrow svg{width:18px;height:18px;}}
+@media(prefers-reduced-motion:reduce){.sv-slide{transition:none;}}

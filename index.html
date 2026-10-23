@@ -267,8 +267,14 @@
 
   <!-- 4e-1 :: SUNSET VIEW -->
   <section class="section sunset-view" data-theme="dark">
-    <div class="sunset-view-media">
-      <img src="assets/sunset-balcony.jpg" alt="Resident with a cup of tea in an armchair on a glass-walled balcony at sunset, overlooking the sea link and the Mumbai skyline" loading="lazy">
+    <div class="sunset-view-media sv-carousel" role="region" aria-roledescription="carousel" aria-label="Views from the balcony">
+      <div class="sv-track">
+        <img class="sv-slide is-active" src="assets/sunset-balcony.jpg" alt="Resident with a cup of tea in an armchair on a glass-walled balcony at sunset, overlooking the sea link and the Mumbai skyline" loading="lazy">
+        <img class="sv-slide" src="assets/sunset-man.jpg" alt="Resident relaxing in an armchair on a glass-walled balcony at dusk, overlooking the Mumbai skyline" loading="lazy">
+      </div>
+      <button class="sv-arrow sv-prev" type="button" aria-label="Previous image"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="sv-arrow sv-next" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5l7 7-7 7"/></svg></button>
+      <div class="sv-dots" role="tablist" aria-label="Choose image"></div>
     </div>
   </section>
 

@@ -324,7 +324,7 @@ function lightsOn(imgSelector, triggerSelector) {
     });
 }
 lightsOn('.retail-podium-media img', '.retail-podium-media');
-lightsOn('.sunset-view-media img', '.sunset-view-media');
+lightsOn('.sunset-view-media .sv-track', '.sunset-view-media');
 
 wipeReveal('.lobby-area-item img', { trigger: '.lobby-area-gallery', stagger: 0.15, duration: 1.2 });
 wipeReveal('.res-panel.is-active .res-panel-media img', { trigger: '.residences', duration: 1.1 });
@@ -509,3 +509,39 @@ form.addEventListener('submit', (e) => {
 
 /* refresh ScrollTrigger after images load (layout shifts) */
 window.addEventListener('load', () => ScrollTrigger.refresh());
+
+/* ============ SUNSET-VIEW CAROUSEL (crossfade, autoplay, pauses on hover/touch) ============ */
+(function () {
+  const root = document.querySelector('.sv-carousel');
+  if (!root) return;
+  const slides = [...root.querySelectorAll('.sv-slide')];
+  const dotsWrap = root.querySelector('.sv-dots');
+  let i = 0, timer = null;
+  const dots = slides.map((_, n) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('aria-label', 'Show image ' + (n + 1));
+    b.addEventListener('click', () => { go(n); restart(); });
+    dotsWrap.appendChild(b); return b;
+  });
+  function go(n) {
+    i = (n + slides.length) % slides.length;
+    slides.forEach((s, k) => s.classList.toggle('is-active', k === i));
+    dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
+  }
+  function start() { stop(); timer = setInterval(() => go(i + 1), 5000); }
+  function stop() { if (timer) clearInterval(timer); timer = null; }
+  function restart() { start(); }
+  root.querySelector('.sv-prev').addEventListener('click', () => { go(i - 1); restart(); });
+  root.querySelector('.sv-next').addEventListener('click', () => { go(i + 1); restart(); });
+  root.addEventListener('mouseenter', stop);
+  root.addEventListener('mouseleave', start);
+  let x0 = null;
+  root.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  root.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 40) { go(i + (dx < 0 ? 1 : -1)); restart(); }
+  });
+  go(0);
+  if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) start();
+})();
