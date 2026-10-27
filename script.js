@@ -5,6 +5,9 @@ const cursorDot = document.getElementById('cursorDot');
 if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
   window.addEventListener('mousemove', (e) => {
     gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.5, ease: 'power3.out' });
+    /* cursor colour follows the section actually under the pointer */
+    const sec = e.target.closest && e.target.closest('[data-theme]');
+    cursorDot.classList.toggle('is-dark', !!sec && sec.dataset.theme === 'dark');
   });
   document.querySelectorAll('a, button, .res-tab').forEach(el => {
     el.addEventListener('mouseenter', () => cursorDot.classList.add('is-hover'));

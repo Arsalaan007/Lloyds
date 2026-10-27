@@ -702,3 +702,11 @@ body.menu-open{overflow:hidden;}
 .res-variant:hover{border-color:var(--black);color:var(--black);}
 .res-variant.is-active{background:var(--black);color:var(--white);border-color:var(--black);}
 @media(max-width:560px){.res-variants{gap:8px;margin-bottom:28px;}.res-variant{font-size:12px;padding:9px 14px;}}
+
+/* cursor: hover ring never fills (it used to turn into a solid disk that hid labels) */
+.cursor-dot.is-hover,.cursor-dot.is-dark.is-hover{background:transparent;}
+/* residence tabs: clear hover state */
+@media(hover:hover){
+  .res-tab:hover{color:var(--black);}
+  .res-tab:hover::after{transform:scaleX(1);}
+}
