@@ -710,3 +710,10 @@ body.menu-open{overflow:hidden;}
   .res-tab:hover{color:var(--black);}
   .res-tab:hover::after{transform:scaleX(1);}
 }
+
+/* phones: banner fills the whole first screen (no next section peeking in);
+   anchored right so the SOLACE logo and Lloyds mark stay in frame */
+@media(max-width:600px){
+  .hero{aspect-ratio:auto;height:100vh;height:100svh;min-height:520px;}
+  .hero-media img{object-fit:cover;object-position:100% 30%;}
+}
