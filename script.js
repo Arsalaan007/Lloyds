@@ -29,14 +29,19 @@ if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
 
 /* ============ NAV: hide/show + progress + theme ============ */
 const nav = document.getElementById('nav');
+const progressFillEl = document.getElementById('progressFill');
 let lastY = window.scrollY;
+let navHidden = false;
 ScrollTrigger.create({
   start: 0, end: 'max',
   onUpdate: (self) => {
-    document.getElementById('progressFill').style.height = (self.progress * 100) + '%';
+    progressFillEl.style.transform = 'scaleY(' + self.progress.toFixed(4) + ')';
     const y = window.scrollY;
-    if (y > lastY && y > 200) nav.style.transform = 'translateY(-120%)';
-    else nav.style.transform = 'translateY(0)';
+    const hide = y > lastY && y > 200;
+    if (hide !== navHidden) {
+      navHidden = hide;
+      nav.style.transform = hide ? 'translateY(-120%)' : 'translateY(0)';
+    }
     lastY = y;
   }
 });
@@ -109,17 +114,33 @@ if (horizonPathEl && horizonSunEl) {
   const pathLength = horizonPathEl.getTotalLength();
   const sunRadius = parseFloat(horizonSunEl.getAttribute('r')) || 34;
   const sunLift = sunRadius + 10; // gap between the line and the bottom of the circle
+  const baseX = parseFloat(horizonSunEl.getAttribute('cx')) || 600;
+  const baseY = parseFloat(horizonSunEl.getAttribute('cy')) || 70;
+  /* sample the path once up front: calling getPointAtLength on every scroll
+     tick was forcing costly SVG geometry work and made the ball stutter on phones */
+  const STEPS = 240, lutX = new Float32Array(STEPS + 1), lutY = new Float32Array(STEPS + 1);
+  for (let k = 0; k <= STEPS; k++) {
+    const pt = horizonPathEl.getPointAtLength(pathLength * k / STEPS);
+    lutX[k] = pt.x - baseX; lutY[k] = pt.y - sunLift - baseY;
+  }
+  horizonSunEl.style.willChange = 'transform';
+  const sunState = { p: 0 };
+  function renderSun() {
+    const f = Math.min(Math.max(sunState.p, 0), 1) * STEPS, i = Math.min(Math.floor(f), STEPS - 1), t = f - i;
+    const x = lutX[i] + (lutX[i + 1] - lutX[i]) * t;
+    const y = lutY[i] + (lutY[i + 1] - lutY[i]) * t;
+    horizonSunEl.style.transform = 'translate(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px)';
+  }
+  /* one smoothing tween (eased on the GSAP ticker) instead of scrub lag + attribute writes */
+  const sunTo = gsap.quickTo(sunState, 'p', { duration: 0.45, ease: 'power2.out', onUpdate: renderSun });
   ScrollTrigger.create({
     trigger: '.horizon-wrap',
     start: 'top bottom',
     end: 'bottom top',
-    scrub: 0.5,
-    onUpdate: (self) => {
-      const pt = horizonPathEl.getPointAtLength(self.progress * pathLength);
-      horizonSunEl.setAttribute('cx', pt.x);
-      horizonSunEl.setAttribute('cy', pt.y - sunLift); // rest just above the line, like the logo
-    }
+    onUpdate: (self) => sunTo(self.progress),
+    onRefresh: (self) => { sunState.p = self.progress; renderSun(); }
   });
+  renderSun();
 }
 
 /* ============ GENERIC REVEALS ============ */

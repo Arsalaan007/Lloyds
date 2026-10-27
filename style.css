@@ -147,7 +147,7 @@ body.menu-open{overflow:hidden;}
 /* ============ HORIZON DIVIDER ============ */
 .horizon-wrap{background:var(--black);padding-top:6vw;}
 .horizon-svg{width:100%;height:auto;display:block;}
-.horizon-sun{fill:var(--white);opacity:0;transform-origin:600px 70px;}
+.horizon-sun{fill:var(--white);opacity:0;}
 .horizon-line{
   fill:none;stroke:var(--white);stroke-width:1.4;
   stroke-dasharray:1600;stroke-dashoffset:1600;
@@ -717,3 +717,9 @@ body.menu-open{overflow:hidden;}
   .hero{aspect-ratio:auto;height:100vh;height:100svh;min-height:520px;}
   .hero-media img{object-fit:cover;object-position:100% 30%;}
 }
+
+/* performance: the full-screen multiply-blended grain repaints the whole screen on every
+   scroll frame; it is ~2% opacity so it is dropped on touch devices / small screens */
+@media(hover:none),(max-width:900px){ .grain{display:none;} }
+/* progress bar animates with transform (compositor) instead of height (layout) */
+.progress-fill{height:100%;transform:scaleY(0);transform-origin:top;will-change:transform;}
