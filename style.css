@@ -688,3 +688,17 @@ body.menu-open{overflow:hidden;}
 .sv-dots button.is-active{background:#fff;}
 @media(max-width:560px){.sv-arrow{width:36px;height:36px;}.sv-arrow svg{width:18px;height:18px;}}
 @media(prefers-reduced-motion:reduce){.sv-slide{transition:none;}}
+
+/* hero: banner artwork (text baked in) shown whole, no crop */
+.hero{height:auto;min-height:0;aspect-ratio:16/9;display:block;}
+.hero-media img{height:100%;object-fit:cover;object-position:center;}
+.hero-scrim{background:linear-gradient(180deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,0) 16%);}
+@media(max-width:900px){.hero{aspect-ratio:2/3;}}
+
+/* 3 BHK floor variants */
+.res-variants{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:-8px auto 36px;padding:0 5vw;}
+.res-variants[hidden]{display:none;}
+.res-variant{font:inherit;font-size:13px;letter-spacing:0.05em;padding:10px 18px;border:1px solid var(--line);background:transparent;color:var(--mid);border-radius:999px;cursor:pointer;transition:background .3s,color .3s,border-color .3s;}
+.res-variant:hover{border-color:var(--black);color:var(--black);}
+.res-variant.is-active{background:var(--black);color:var(--white);border-color:var(--black);}
+@media(max-width:560px){.res-variants{gap:8px;margin-bottom:28px;}.res-variant{font-size:12px;padding:9px 14px;}}

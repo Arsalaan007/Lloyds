@@ -87,29 +87,8 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) closeMobileMenu();
 });
 
-/* ============ HERO entrance ============ */
-gsap.timeline({ delay: 0.15 })
-  .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0)
-  .from('.hero-title .line span', {
-    yPercent: 115, duration: 1.1, ease: 'power4.out', stagger: 0.12
-  }, 0.1)
-  .to('.hero-sub', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 0.55)
-  .to('.hero-foot', { opacity: 1, duration: 0.8 }, 0.75);
-
-gsap.set('.hero-eyebrow', { opacity: 0, y: 14 });
-gsap.set('.hero-sub', { opacity: 0, y: 16 });
-gsap.set('.hero-foot', { opacity: 0 });
-
-/* hero parallax on scroll */
-gsap.to('#heroImg', {
-  yPercent: 10,
-  ease: 'none',
-  scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
-});
-gsap.to('.hero-content', {
-  yPercent: -22, opacity: 0.3, ease: 'none',
-  scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
-});
+/* ============ HERO entrance (banner artwork carries its own text) ============ */
+gsap.from('#heroImg', { opacity: 0, scale: 1.04, duration: 1.4, ease: 'power2.out', clearProps: 'transform,opacity' });
 
 /* ============ HORIZON SVG draw (signature moment) ============ */
 const horizonTl = gsap.timeline({
@@ -455,28 +434,44 @@ wipeReveal('.res-panel.is-active .res-panel-media img', { trigger: '.residences'
   }, { passive: false });
 })();
 
-/* ============ RESIDENCES tabs ============ */
+/* ============ RESIDENCES tabs (+ 3 BHK floor variants) ============ */
 const tabs = document.querySelectorAll('.res-tab');
 const panels = document.querySelectorAll('.res-panel');
+const variantWrap = document.querySelector('.res-variants');
+const variantBtns = document.querySelectorAll('.res-variant');
+let activeVariant = '3bhk-1109';
+let activeTab = '1bhk';
+
+function showPanel(key) {
+  panels.forEach(p => {
+    if (p.dataset.panel === key) {
+      p.classList.add('is-active');
+      gsap.fromTo(p, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
+      const panelImg = p.querySelector('.res-panel-media img');
+      if (panelImg) {
+        gsap.fromTo(panelImg, { clipPath: 'inset(0% 100% 0% 0%)' }, {
+          clipPath: 'inset(0% 0% 0% 0%)', duration: 0.9, ease: 'power3.inOut'
+        });
+      }
+    } else {
+      p.classList.remove('is-active');
+    }
+  });
+}
 tabs.forEach(tab => {
   tab.addEventListener('click', () => {
-    const target = tab.dataset.target;
+    activeTab = tab.dataset.target;
     tabs.forEach(t => t.classList.remove('is-active'));
     tab.classList.add('is-active');
-    panels.forEach(p => {
-      if (p.dataset.panel === target) {
-        p.classList.add('is-active');
-        gsap.fromTo(p, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
-        const panelImg = p.querySelector('.res-panel-media img');
-        if (panelImg) {
-          gsap.fromTo(panelImg, { clipPath: 'inset(0% 100% 0% 0%)' }, {
-            clipPath: 'inset(0% 0% 0% 0%)', duration: 0.9, ease: 'power3.inOut'
-          });
-        }
-      } else {
-        p.classList.remove('is-active');
-      }
-    });
+    if (variantWrap) variantWrap.hidden = activeTab !== '3bhk';
+    showPanel(activeTab === '3bhk' ? activeVariant : activeTab);
+  });
+});
+variantBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    activeVariant = btn.dataset.variant;
+    variantBtns.forEach(b => b.classList.toggle('is-active', b === btn));
+    showPanel(activeVariant);
   });
 });
 
