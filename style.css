@@ -723,3 +723,11 @@ body.menu-open{overflow:hidden;}
 @media(hover:none),(max-width:900px){ .grain{display:none;} }
 /* progress bar animates with transform (compositor) instead of height (layout) */
 .progress-fill{height:100%;transform:scaleY(0);transform-origin:top;will-change:transform;}
+
+/* carousel title (bottom-left), taken from each image's name */
+.sv-carousel::after{content:'';position:absolute;left:0;right:0;bottom:0;height:34%;z-index:2;pointer-events:none;background:linear-gradient(0deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 100%);}
+.sv-caption{position:absolute;left:clamp(16px,4vw,64px);bottom:clamp(18px,3vw,44px);z-index:3;pointer-events:none;color:#fff;max-width:min(70%,720px);}
+.sv-cap-rule{display:block;width:clamp(36px,4vw,64px);height:1px;background:#fff;opacity:.85;margin-bottom:clamp(8px,1vw,14px);transform-origin:left;}
+.sv-cap-mask{display:block;overflow:hidden;padding-bottom:.18em;}
+.sv-cap-text{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(17px,2.1vw,34px);line-height:1.15;letter-spacing:.01em;text-shadow:0 1px 14px rgba(0,0,0,.35);}
+@media(max-width:560px){.sv-caption{max-width:calc(100% - 32px);}.sv-dots{justify-content:flex-end;right:16px;left:auto;}}

@@ -542,10 +542,21 @@ window.addEventListener('load', () => ScrollTrigger.refresh());
     b.addEventListener('click', () => { go(n); restart(); });
     dotsWrap.appendChild(b); return b;
   });
+  const capText = root.querySelector('.sv-cap-text');
+  const capRule = root.querySelector('.sv-cap-rule');
+  const calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function showCaption() {
+    capText.textContent = slides[i].dataset.title || '';
+    if (calm) return;
+    gsap.killTweensOf([capText, capRule]);
+    gsap.fromTo(capRule, { scaleX: 0, opacity: 0.85 }, { scaleX: 1, opacity: 0.85, duration: 0.8, ease: 'power3.out', delay: 0.35 });
+    gsap.fromTo(capText, { yPercent: 115, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.9, ease: 'power3.out', delay: 0.5 });
+  }
   function go(n) {
     i = (n + slides.length) % slides.length;
     slides.forEach((s, k) => s.classList.toggle('is-active', k === i));
     dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
+    showCaption();
   }
   function start() { stop(); timer = setInterval(() => go(i + 1), 5000); }
   function stop() { if (timer) clearInterval(timer); timer = null; }
@@ -562,5 +573,9 @@ window.addEventListener('load', () => ScrollTrigger.refresh());
     if (Math.abs(dx) > 40) { go(i + (dx < 0 ? 1 : -1)); restart(); }
   });
   go(0);
+  if (!calm) {
+    gsap.set([capText, capRule], { opacity: 0 });
+    ScrollTrigger.create({ trigger: root, start: 'top 70%', once: true, onEnter: showCaption });
+  }
   if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) start();
 })();
