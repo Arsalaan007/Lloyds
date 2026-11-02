@@ -152,7 +152,7 @@ const revealTargets = [
   '.feature-kicker', '.feature-desc',
   '.pool-more-kicker', '.pool-more-title', '.pool-more-desc', '.img-note',
   '.visit-site-kicker', '.visit-site-title', '.visit-site-desc',
-  '.lobby-area-title',
+  '.lobby-area-title', '.sunset-view-title',
   '.am-kicker', '.am-group-title',
   '.res-kicker', '.res-tabs',
   '.enquire-kicker', '.enquire-sub', '.enquire-form'

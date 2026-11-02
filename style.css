@@ -731,3 +731,8 @@ body.menu-open{overflow:hidden;}
 .sv-cap-mask{display:block;overflow:hidden;padding-bottom:.18em;}
 .sv-cap-text{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(17px,2.1vw,34px);line-height:1.15;letter-spacing:.01em;text-shadow:0 1px 14px rgba(0,0,0,.35);}
 @media(max-width:560px){.sv-caption{max-width:calc(100% - 32px);}.sv-dots{justify-content:flex-end;right:16px;left:auto;}}
+
+/* title above the balcony carousel */
+.sunset-view-title{font-family:var(--serif);font-weight:400;color:var(--white);text-align:center;font-size:clamp(24px,3.4vw,48px);line-height:1.2;max-width:min(88%,1100px);margin:0 auto clamp(40px,5vw,80px);}
+.sunset-view-title-sub{display:block;margin-top:.45em;font-size:.62em;line-height:1.45;opacity:.8;}
+@media(max-width:560px){.sunset-view-title{max-width:calc(100% - 40px);font-size:clamp(22px,6.4vw,28px);margin-bottom:40px;}}
