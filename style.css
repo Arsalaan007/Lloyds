@@ -742,3 +742,86 @@ body.menu-open{overflow:hidden;}
 .sunset-view-title{margin:clamp(40px,5vw,80px) auto 0;}
 @media(max-width:560px){.sunset-view-title{margin:40px auto 0;}}
 @media(max-width:560px){.sunset-view{padding-bottom:40px;}}
+
+/* ============ FLOOR BY FLOOR (immersive floor-plan explorer) ============ */
+.floors{background:#f5f4ef;color:var(--black);padding:clamp(80px,9vw,140px) 5vw clamp(64px,7vw,110px);overflow-x:clip;}
+.floors-head{text-align:center;}
+.floors-kicker{font-size:13px;letter-spacing:0.14em;color:var(--mid);margin-bottom:22px;}
+.floors-title{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5.6vw,72px);line-height:1.08;}
+.floors-sub{max-width:44ch;margin:22px auto 0;font-size:clamp(14px,1.25vw,17px);line-height:1.7;color:var(--mid);}
+.floors-wrap{display:grid;grid-template-columns:minmax(0,1fr) clamp(72px,7.5vw,112px);gap:clamp(12px,2vw,32px);max-width:1480px;margin:clamp(40px,5vw,72px) auto 0;align-items:stretch;}
+
+.fp-stage{position:relative;aspect-ratio:2576/1449;overflow:hidden;cursor:zoom-in;outline:none;-webkit-tap-highlight-color:transparent;}
+.fp-stage:focus-visible{box-shadow:0 0 0 2px var(--black);}
+.fp-plans{position:absolute;inset:0;}
+.fp-plan{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;user-select:none;-webkit-user-drag:none;will-change:transform,opacity;}
+.fp-plan.is-active{opacity:1;}
+.fp-spot{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .5s;background:radial-gradient(460px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.6),rgba(255,255,255,0) 62%);}
+.fp-stage.is-hover .fp-spot{opacity:1;}
+.fp-zoom{position:absolute;right:clamp(10px,1.4vw,20px);bottom:clamp(10px,1.4vw,20px);z-index:3;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.9);color:var(--black);display:flex;align-items:center;justify-content:center;border:1px solid rgba(10,10,10,.12);cursor:zoom-in;transition:transform .3s var(--ease),background .3s;}
+.fp-zoom svg{width:18px;height:18px;}
+.fp-zoom:hover{transform:scale(1.08);background:#fff;}
+.fp-hint{position:absolute;left:clamp(10px,1.4vw,20px);bottom:clamp(12px,1.6vw,22px);z-index:3;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);pointer-events:none;}
+.fp-hint::after{content:'Click to explore';}
+@media(hover:none){.fp-hint::after{content:'Tap to explore';}}
+
+/* elevator rail */
+.fp-rail{position:relative;display:flex;flex-direction:column-reverse;justify-content:space-between;align-items:stretch;padding:2% 0;}
+.fp-track{position:absolute;right:0;top:2%;bottom:2%;width:1px;background:var(--line);}
+
+.fp-floor{position:relative;display:flex;flex-direction:row-reverse;align-items:center;justify-content:flex-start;gap:12px;padding:10px 0;font-size:13px;letter-spacing:.04em;color:var(--mid);cursor:pointer;transition:color .3s;}
+.fp-floor-tick{display:block;width:14px;height:1px;background:currentColor;transition:width .45s var(--ease);}
+.fp-floor-num{font-variant-numeric:tabular-nums;}
+@media(hover:hover){.fp-floor:hover{color:var(--black);}.fp-floor:hover .fp-floor-tick{width:22px;}}
+.fp-floor.is-active{color:var(--black);}
+.fp-floor.is-active .fp-floor-tick{width:30px;height:1.5px;}
+.fp-floor.is-active .fp-floor-num{font-weight:600;}
+.fp-floor:focus-visible{outline:1px solid var(--black);outline-offset:2px;}
+
+/* info row */
+.fp-info{max-width:1480px;margin:clamp(28px,3.2vw,52px) auto 0;padding-top:clamp(22px,2.4vw,34px);border-top:1px solid var(--line);display:grid;grid-template-columns:minmax(240px,1fr) 1.5fr auto;gap:clamp(20px,3vw,56px);align-items:end;}
+.fp-level{display:block;font-size:12px;letter-spacing:.14em;color:var(--mid);margin-bottom:14px;text-transform:uppercase;}
+.fp-name{font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.6vw,54px);line-height:1.08;}
+.fp-name-mask{display:block;overflow:hidden;padding-bottom:.12em;}
+.fp-name-text{display:block;}
+.fp-tag{margin-top:8px;font-size:14px;color:var(--mid);letter-spacing:.03em;}
+.fp-feats{list-style:none;display:flex;flex-wrap:wrap;gap:8px;}
+.fp-feats li{border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:13px;line-height:1.2;color:var(--black);}
+.fp-controls{display:flex;align-items:center;gap:10px;}
+.fp-btn{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--black);transition:background .3s,color .3s,border-color .3s,opacity .3s;}
+@media(hover:hover){.fp-btn:hover,.fp-ride:hover{background:var(--black);color:#fff;border-color:var(--black);}}
+.fp-btn[disabled]{opacity:.3;pointer-events:none;}
+.fp-ride{height:46px;padding:0 20px;border-radius:999px;border:1px solid var(--line);font-size:13px;letter-spacing:.05em;color:var(--black);transition:background .3s,color .3s,border-color .3s;}
+.fp-ride[aria-pressed="true"]{background:var(--black);color:#fff;border-color:var(--black);}
+
+/* tablet / mobile: rail runs along the bottom of the stage */
+@media(max-width:900px){
+  .floors-wrap{grid-template-columns:1fr;gap:0;}
+  .fp-stage{margin:0 -5vw;}
+  .fp-rail{flex-direction:row;padding:22px 0 0;margin-top:6px;}
+  .fp-track{left:0;right:0;top:auto;bottom:0;width:auto;height:1px;}
+  .fp-cabin{left:0;right:auto;top:-11.5px;}
+  .fp-cable{top:-.25px;left:0;width:0;height:1.5px;}
+  .fp-floor{flex-direction:column;justify-content:flex-end;gap:8px;padding:0 0 12px;font-size:12px;flex:1 1 0;min-width:0;align-items:center;}
+  .fp-floor-tick{width:1px;height:10px;order:2;transition:height .45s var(--ease);}
+  .fp-floor.is-active .fp-floor-tick{width:1px;height:20px;}
+  @media(hover:hover){.fp-floor:hover .fp-floor-tick{width:1px;height:16px;}}
+  .fp-info{grid-template-columns:1fr;gap:20px;align-items:start;}
+  .fp-controls{justify-content:flex-start;}
+}
+@media(max-width:560px){
+  .floors{padding-top:72px;padding-bottom:56px;}
+  .floors-wrap{margin-top:36px;}
+  .fp-floor{font-size:11px;letter-spacing:0;}
+  .fp-feats li{font-size:12px;padding:7px 12px;}
+  .fp-zoom{width:38px;height:38px;}
+}
+
+/* the little gold lift that travels between floors */
+.fp-cable{position:absolute;left:-.25px;top:0;width:1.5px;height:0;background:#c9972f;opacity:.75;}
+.fp-cabin{position:absolute;right:-8.5px;top:0;width:18px;height:24px;border-radius:3px;background:#2a2418;display:flex;overflow:hidden;z-index:1;box-shadow:0 4px 12px rgba(185,134,42,.4),0 0 0 1px rgba(233,196,122,.55);}
+.fp-door{flex:1;display:block;background:linear-gradient(180deg,#ecc87e,#b8862a);transition:transform .6s var(--ease);}
+.fp-door-l{border-right:1px solid rgba(0,0,0,.28);}
+.fp-cabin.is-open .fp-door-l{transform:translateX(-90%);}
+.fp-cabin.is-open .fp-door-r{transform:translateX(90%);}
+@media(prefers-reduced-motion:reduce){.fp-door{transition:none;}}

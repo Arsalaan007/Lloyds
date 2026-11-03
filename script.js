@@ -152,7 +152,7 @@ const revealTargets = [
   '.feature-kicker', '.feature-desc',
   '.pool-more-kicker', '.pool-more-title', '.pool-more-desc', '.img-note',
   '.visit-site-kicker', '.visit-site-title', '.visit-site-desc',
-  '.lobby-area-title', '.sunset-view-title',
+  '.lobby-area-title', '.sunset-view-title', '.floors-kicker', '.floors-sub', '.fp-info',
   '.am-kicker', '.am-group-title',
   '.res-kicker', '.res-tabs',
   '.enquire-kicker', '.enquire-sub', '.enquire-form'
@@ -199,7 +199,7 @@ function wrapWordsForStagger(el) {
 
 const titleSelectors = [
   '.arch-title', '.amenity-intro-title', '.pool-title',
-  '.feature-title', '.am-title', '.res-title', '.enquire-title'
+  '.feature-title', '.am-title', '.res-title', '.floors-title', '.enquire-title'
 ];
 titleSelectors.forEach(sel => {
   document.querySelectorAll(sel).forEach(el => {
@@ -388,6 +388,8 @@ wipeReveal('.res-panel.is-active .res-panel-media img', { trigger: '.residences'
     lightbox.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('menu-open');
   }
+
+  window.solaceOpenLightbox = openLightbox;
 
   document.querySelectorAll('.zoom-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -578,4 +580,166 @@ window.addEventListener('load', () => ScrollTrigger.refresh());
     ScrollTrigger.create({ trigger: root, start: 'top 70%', once: true, onEnter: showCaption });
   }
   if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) start();
+})();
+
+/* ============ FLOOR BY FLOOR EXPLORER ============ */
+(function () {
+  const stage = document.getElementById('fpStage');
+  if (!stage) return;
+  const plansWrap = stage.querySelector('.fp-plans');
+  const plans = [...stage.querySelectorAll('.fp-plan')];
+  const rail = document.querySelector('.fp-rail');
+  const btns = [...rail.querySelectorAll('.fp-floor')];
+  const cabin = rail.querySelector('.fp-cabin');
+  const levelEl = document.querySelector('.fp-level');
+  const nameEl = document.querySelector('.fp-name-text');
+  const tagEl = document.querySelector('.fp-tag');
+  const featsEl = document.querySelector('.fp-feats');
+  const upBtn = document.querySelector('.fp-up');
+  const downBtn = document.querySelector('.fp-down');
+  const rideBtn = document.querySelector('.fp-ride');
+  const rideLabel = rideBtn.querySelector('.fp-ride-label');
+  const calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const N = plans.length;
+  const isStacked = () => window.matchMedia('(max-width: 900px)').matches;
+  let cur = 0, ride = null, swiped = false;
+
+  function setInfo(n, dir, animate) {
+    const d = btns[n].dataset;
+    const apply = () => {
+      nameEl.textContent = d.name;
+      tagEl.textContent = d.tag;
+      levelEl.textContent = 'Level ' + (n + 1) + ' of ' + N;
+      featsEl.innerHTML = '';
+      d.feats.split('|').forEach(t => { const li = document.createElement('li'); li.textContent = t; featsEl.appendChild(li); });
+    };
+    if (!animate || calm) { apply(); return; }
+    gsap.killTweensOf([nameEl, tagEl, featsEl, featsEl.children]);
+    gsap.to(nameEl, { yPercent: -dir * 110, duration: 0.3, ease: 'power2.in', onComplete: () => {
+      apply();
+      gsap.fromTo(nameEl, { yPercent: dir * 110 }, { yPercent: 0, duration: 0.7, ease: 'power3.out' });
+      gsap.fromTo(featsEl.children, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out', stagger: 0.06 });
+      gsap.fromTo(tagEl, { opacity: 0 }, { opacity: 1, duration: 0.6 });
+    } });
+  }
+
+  const cable = rail.querySelector('.fp-cable');
+  let doorTimer = null;
+  function placeCabin(animate) {
+    const track = rail.querySelector('.fp-track');
+    const b = btns[cur].getBoundingClientRect(), r = track.getBoundingClientRect();
+    const cw = cabin.offsetWidth, ch = cabin.offsetHeight;
+    const dur = animate && !calm ? 1.05 : 0;
+    const t = { duration: dur, ease: 'power3.inOut', overwrite: true };
+    clearTimeout(doorTimer); cabin.classList.remove('is-open');
+    const arrive = () => {
+      cabin.classList.add('is-open');
+      doorTimer = setTimeout(() => cabin.classList.remove('is-open'), 1500);
+    };
+    if (isStacked()) {
+      const x = b.left + b.width / 2 - r.left - cw / 2;
+      gsap.to(cabin, Object.assign({ x, y: 0, onComplete: arrive }, t));
+      gsap.to(cable, Object.assign({ width: x + cw / 2, height: 1.5 }, t));
+    } else {
+      const y = b.top + b.height / 2 - r.top - ch / 2;
+      gsap.to(cabin, Object.assign({ y, x: 0, onComplete: arrive }, t));
+      gsap.to(cable, Object.assign({ height: y + ch / 2, width: 1.5 }, t));
+    }
+  }
+
+  function go(n, userInitiated) {
+    n = Math.max(0, Math.min(N - 1, n));
+    if (n === cur) return;
+    if (userInitiated) stopRide();
+    const dir = n > cur ? 1 : -1;
+    const out = plans[cur], inn = plans[n];
+    inn.loading = 'eager';
+    [plans[n + 1], plans[n - 1]].forEach(p => { if (p) p.loading = 'eager'; });
+    const shift = isStacked() ? 4 : 7;
+    gsap.killTweensOf([out, inn]);
+    plans.forEach((p, k) => { if (k !== cur && k !== n) gsap.set(p, { opacity: 0, clearProps: 'transform' }); });
+    if (calm) {
+      gsap.set(out, { opacity: 0 }); gsap.set(inn, { opacity: 1 });
+    } else {
+      gsap.set(inn, { zIndex: 2 }); gsap.set(out, { zIndex: 1 });
+      gsap.fromTo(inn, { opacity: 0, yPercent: dir * shift, scale: 0.985 },
+        { opacity: 1, yPercent: 0, scale: 1, duration: 1, ease: 'power3.out', clearProps: 'zIndex' });
+      gsap.to(out, { opacity: 0, yPercent: -dir * shift, scale: 0.985, duration: 0.75, ease: 'power2.in',
+        onComplete: () => gsap.set(out, { clearProps: 'transform,zIndex' }) });
+    }
+    plans[cur].classList.remove('is-active'); inn.classList.add('is-active');
+    btns.forEach((b, k) => { b.classList.toggle('is-active', k === n); b.setAttribute('aria-selected', k === n ? 'true' : 'false'); b.tabIndex = k === n ? 0 : -1; });
+    cur = n;
+    upBtn.disabled = cur === N - 1; downBtn.disabled = cur === 0;
+    setInfo(n, dir, true);
+    placeCabin(true);
+  }
+
+  /* controls */
+  btns.forEach((b, k) => { b.tabIndex = k === 0 ? 0 : -1; b.addEventListener('click', () => go(k, true)); });
+  upBtn.addEventListener('click', () => go(cur + 1, true));
+  downBtn.addEventListener('click', () => go(cur - 1, true));
+  downBtn.disabled = true;
+  function key(e) {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1, true); }
+    else if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1, true); }
+    else if (e.key === 'Home') { e.preventDefault(); go(0, true); }
+    else if (e.key === 'End') { e.preventDefault(); go(N - 1, true); }
+  }
+  stage.addEventListener('keydown', key);
+  rail.addEventListener('keydown', (e) => { key(e); const b = btns[cur]; if (b) b.focus(); });
+
+  /* ride the lift: ascends floor by floor, stops at the top */
+  function stopRide() {
+    if (ride) { clearInterval(ride); ride = null; }
+    rideBtn.setAttribute('aria-pressed', 'false'); rideLabel.textContent = 'Take the lift';
+  }
+  rideBtn.addEventListener('click', () => {
+    if (ride) { stopRide(); return; }
+    rideBtn.setAttribute('aria-pressed', 'true'); rideLabel.textContent = 'Stop';
+    if (cur === N - 1) go(0, false);
+    ride = setInterval(() => {
+      if (cur >= N - 1) { stopRide(); return; }
+      go(cur + 1, false);
+      if (cur >= N - 1) stopRide();
+    }, 3400);
+  });
+
+  /* zoom (reuses the site lightbox) and swipe */
+  function openZoom() {
+    if (swiped) return;
+    if (window.solaceOpenLightbox) window.solaceOpenLightbox(plans[cur].currentSrc || plans[cur].src, plans[cur].alt);
+  }
+  stage.addEventListener('click', (e) => { if (e.target.closest('.fp-zoom') || e.target === stage || stage.contains(e.target)) openZoom(); });
+  let x0 = null, y0 = null;
+  stage.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; swiped = false; }, { passive: true });
+  stage.addEventListener('touchend', (e) => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { swiped = true; go(cur + (dx < 0 ? 1 : -1), true); setTimeout(() => { swiped = false; }, 350); }
+  });
+
+  /* desktop: gentle 3D tilt + light that follows the cursor */
+  if (desktopOnlyMotion()) {
+    const rx = gsap.quickTo(plansWrap, 'rotationX', { duration: 0.8, ease: 'power3.out' });
+    const ry = gsap.quickTo(plansWrap, 'rotationY', { duration: 0.8, ease: 'power3.out' });
+    gsap.set(plansWrap, { transformPerspective: 1400, transformOrigin: '50% 50%' });
+    stage.addEventListener('mousemove', (e) => {
+      const r = stage.getBoundingClientRect();
+      const nx = (e.clientX - r.left) / r.width, ny = (e.clientY - r.top) / r.height;
+      ry((nx - 0.5) * 5); rx(-(ny - 0.5) * 3.2);
+      stage.style.setProperty('--mx', (nx * 100) + '%'); stage.style.setProperty('--my', (ny * 100) + '%');
+      stage.classList.add('is-hover');
+    });
+    stage.addEventListener('mouseleave', () => { rx(0); ry(0); stage.classList.remove('is-hover'); });
+  }
+
+  /* entrance (desktop only, like the other image entrances) */
+  lightsOn('.fp-plans', '.fp-stage');
+
+  /* keep the cabin on the right tick when layout changes */
+  let rt;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => placeCabin(false), 150); });
+  window.addEventListener('load', () => { placeCabin(false); ScrollTrigger.refresh(); });
+  setInfo(0, 1, false); placeCabin(false);
 })();
