@@ -603,6 +603,9 @@ window.addEventListener('load', () => ScrollTrigger.refresh());
   const N = plans.length;
   const isStacked = () => window.matchMedia('(max-width: 900px)').matches;
   let cur = 0, ride = null, swiped = false;
+  /* plans load on demand (keeps phones from decoding eight huge images at once) */
+  const ensure = (k) => { const p = plans[k]; if (p && p.dataset.src) { p.src = p.dataset.src; delete p.dataset.src; } };
+  window.addEventListener('load', () => { for (let k = 1; k < N; k++) setTimeout(() => ensure(k), 900 * k); });
 
   function setInfo(n, dir, animate) {
     const d = btns[n].dataset;
@@ -687,19 +690,18 @@ window.addEventListener('load', () => ScrollTrigger.refresh());
     if (userInitiated) stopRide();
     const dir = n > cur ? 1 : -1;
     const out = plans[cur], inn = plans[n];
-    inn.loading = 'eager';
-    [plans[n + 1], plans[n - 1]].forEach(p => { if (p) p.loading = 'eager'; });
+    ensure(n); ensure(n + 1); ensure(n - 1);
     const shift = isStacked() ? 4 : 7;
     gsap.killTweensOf([out, inn]);
-    plans.forEach((p, k) => { if (k !== cur && k !== n) gsap.set(p, { opacity: 0, clearProps: 'transform' }); });
+    plans.forEach((p, k) => { if (k !== cur && k !== n) gsap.set(p, { opacity: 0, clearProps: 'transform,visibility' }); });
     if (calm) {
       gsap.set(out, { opacity: 0 }); gsap.set(inn, { opacity: 1 });
     } else {
-      gsap.set(inn, { zIndex: 2 }); gsap.set(out, { zIndex: 1 });
+      gsap.set(inn, { zIndex: 2 }); gsap.set(out, { zIndex: 1, visibility: 'visible' });
       gsap.fromTo(inn, { opacity: 0, yPercent: dir * shift, scale: 0.985 },
         { opacity: 1, yPercent: 0, scale: 1, duration: 1, ease: 'power3.out', clearProps: 'zIndex' });
       gsap.to(out, { opacity: 0, yPercent: -dir * shift, scale: 0.985, duration: 0.75, ease: 'power2.in',
-        onComplete: () => gsap.set(out, { clearProps: 'transform,zIndex' }) });
+        onComplete: () => gsap.set(out, { clearProps: 'transform,zIndex,visibility' }) });
     }
     plans[cur].classList.remove('is-active'); inn.classList.add('is-active');
     btns.forEach((b, k) => { b.classList.toggle('is-active', k === n); b.setAttribute('aria-selected', k === n ? 'true' : 'false'); b.tabIndex = k === n ? 0 : -1; });
