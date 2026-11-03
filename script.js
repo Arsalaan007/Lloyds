@@ -625,6 +625,39 @@ window.addEventListener('load', () => ScrollTrigger.refresh());
 
   const cable = rail.querySelector('.fp-cable');
   let doorTimer = null;
+
+  /* lift "bing": a small synthesised bell, played as the doors open */
+  const soundBtn = document.querySelector('.fp-sound');
+  let actx = null, soundOn = true;
+  try { if (localStorage.getItem('solaceLiftSound') === 'off') soundOn = false; } catch (e) {}
+  const syncSoundBtn = () => { soundBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false'); soundBtn.setAttribute('aria-label', soundOn ? 'Lift sound on' : 'Lift sound off'); };
+  syncSoundBtn();
+  function unlockAudio() {
+    if (!actx) { const AC = window.AudioContext || window.webkitAudioContext; if (AC) { try { actx = new AC(); } catch (e) {} } }
+    if (actx && actx.state === 'suspended') actx.resume();
+  }
+  ['pointerdown', 'touchstart', 'keydown'].forEach(ev => document.getElementById('floors').addEventListener(ev, unlockAudio, { passive: true }));
+  function bing() {
+    if (!soundOn || !actx || actx.state !== 'running') return;
+    const r = stage.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight) return;
+    const t = actx.currentTime, out = actx.createGain();
+    out.gain.value = 0.22; out.connect(actx.destination);
+    [[1318.5, 1, 1.9], [2637, 0.32, 1.1], [3638, 0.1, 0.55]].forEach(([f, v, d]) => {
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(v, t + 0.006);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+      o.connect(g); g.connect(out); o.start(t); o.stop(t + d + 0.05);
+    });
+  }
+  soundBtn.addEventListener('click', () => {
+    soundOn = !soundOn; syncSoundBtn();
+    try { localStorage.setItem('solaceLiftSound', soundOn ? 'on' : 'off'); } catch (e) {}
+    unlockAudio(); if (soundOn) setTimeout(bing, 60);
+  });
+
   function placeCabin(animate) {
     const track = rail.querySelector('.fp-track');
     const b = btns[cur].getBoundingClientRect(), r = track.getBoundingClientRect();
@@ -634,6 +667,7 @@ window.addEventListener('load', () => ScrollTrigger.refresh());
     clearTimeout(doorTimer); cabin.classList.remove('is-open');
     const arrive = () => {
       cabin.classList.add('is-open');
+      if (animate) bing();
       doorTimer = setTimeout(() => cabin.classList.remove('is-open'), 1500);
     };
     if (isStacked()) {

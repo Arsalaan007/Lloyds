@@ -825,3 +825,7 @@ body.menu-open{overflow:hidden;}
 .fp-cabin.is-open .fp-door-l{transform:translateX(-90%);}
 .fp-cabin.is-open .fp-door-r{transform:translateX(90%);}
 @media(prefers-reduced-motion:reduce){.fp-door{transition:none;}}
+
+.fp-sound .fp-snd-off{display:none;}
+.fp-sound[aria-pressed="false"] .fp-snd-on{display:none;}
+.fp-sound[aria-pressed="false"] .fp-snd-off{display:block;}
