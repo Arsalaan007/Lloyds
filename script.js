@@ -635,17 +635,30 @@ window.addEventListener('load', () => ScrollTrigger.refresh());
   try { if (localStorage.getItem('solaceLiftSound') === 'off') soundOn = false; } catch (e) {}
   const syncSoundBtn = () => { soundBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false'); soundBtn.setAttribute('aria-label', soundOn ? 'Lift sound on' : 'Lift sound off'); };
   syncSoundBtn();
+  let primed = false;
   function unlockAudio() {
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}   /* iOS: play even with the silent switch on */
     if (!actx) { const AC = window.AudioContext || window.webkitAudioContext; if (AC) { try { actx = new AC(); } catch (e) {} } }
-    if (actx && actx.state === 'suspended') actx.resume();
+    if (!actx) return;
+    if (actx.state !== 'running') { try { actx.resume(); } catch (e) {} }
+    if (!primed) {            /* a silent blip inside the tap fully unlocks audio on iOS */
+      primed = true;
+      try { const bf = actx.createBuffer(1, 1, 22050), src = actx.createBufferSource(); src.buffer = bf; src.connect(actx.destination); src.start(0); } catch (e) {}
+    }
   }
-  ['pointerdown', 'touchstart', 'keydown'].forEach(ev => document.getElementById('floors').addEventListener(ev, unlockAudio, { passive: true }));
+  /* phones only unlock audio on a finished tap, not on touchstart/pointerdown */
+  ['click', 'touchend', 'pointerup', 'keydown'].forEach(ev => document.getElementById('floors').addEventListener(ev, unlockAudio, { passive: true }));
   function bing() {
-    if (!soundOn || !actx || actx.state !== 'running') return;
+    if (!soundOn || !actx) return;
     const r = stage.getBoundingClientRect();
-    if (r.bottom < 0 || r.top > innerHeight) return;
+    if (r.bottom < 0 || r.top > innerHeight) return;           /* only when the section is on screen */
+    if (actx.state !== 'running') { try { actx.resume().then(ring).catch(() => {}); } catch (e) {} return; }
+    ring();
+  }
+  function ring() {
+    if (!actx || actx.state !== 'running') return;
     const t = actx.currentTime, out = actx.createGain();
-    out.gain.value = 0.22; out.connect(actx.destination);
+    out.gain.value = 0.3; out.connect(actx.destination);
     [[1318.5, 1, 1.9], [2637, 0.32, 1.1], [3638, 0.1, 0.55]].forEach(([f, v, d]) => {
       const o = actx.createOscillator(), g = actx.createGain();
       o.type = 'sine'; o.frequency.value = f;
@@ -658,7 +671,7 @@ window.addEventListener('load', () => ScrollTrigger.refresh());
   soundBtn.addEventListener('click', () => {
     soundOn = !soundOn; syncSoundBtn();
     try { localStorage.setItem('solaceLiftSound', soundOn ? 'on' : 'off'); } catch (e) {}
-    unlockAudio(); if (soundOn) setTimeout(bing, 60);
+    unlockAudio(); if (soundOn) setTimeout(bing, 80);
   });
 
   function placeCabin(animate) {
@@ -739,8 +752,7 @@ window.addEventListener('load', () => ScrollTrigger.refresh());
     if (ride) { clearInterval(ride); ride = null; }
     rideBtn.setAttribute('aria-pressed', 'false'); rideLabel.textContent = 'Take the lift';
   }
-  rideBtn.addEventListener('click', () => {
-    if (ride) { stopRide(); return; }
+  function startRide() {
     rideBtn.setAttribute('aria-pressed', 'true'); rideLabel.textContent = 'Stop';
     if (cur === N - 1) go(0, false);
     ride = setInterval(() => {
@@ -748,7 +760,20 @@ window.addEventListener('load', () => ScrollTrigger.refresh());
       go(cur + 1, false);
       if (cur >= N - 1) stopRide();
     }, 3400);
-  });
+  }
+  rideBtn.addEventListener('click', () => { if (ride) stopRide(); else startRide(); });
+
+  /* auto-play the lift the first time the section scrolls into view; pause when it leaves */
+  if (!calm) {
+    let autoDone = false, autoRide = false;
+    ScrollTrigger.create({
+      trigger: stage, start: 'top 65%', end: 'bottom 20%',
+      onEnter: () => { if (!autoDone && cur === 0 && !ride) { autoDone = true; autoRide = true; startRide(); } },
+      onLeave: () => { if (autoRide && ride) { stopRide(); } autoRide = false; },
+      onLeaveBack: () => { if (autoRide && ride) { stopRide(); } autoRide = false; }
+    });
+    rideBtn.addEventListener('click', () => { autoRide = false; });
+  }
 
   /* zoom (reuses the site lightbox) and swipe */
   function openZoom() {
