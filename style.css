@@ -506,7 +506,7 @@ body.menu-open{overflow:hidden;}
   display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;
   padding-bottom:26px;border-bottom:1px solid var(--line);
 }
-.footer-logo{width:112px;height:auto;object-fit:contain;flex-shrink:0;}
+.footer-logo{width:150px;margin-left:-32.3px;height:auto;object-fit:contain;flex-shrink:0;}
 .footer-links{display:flex;gap:36px;flex-wrap:wrap;font-size:13px;letter-spacing:0.02em;}
 .footer-links a{position:relative;color:var(--black);padding-bottom:2px;}
 .footer-links a::after{
