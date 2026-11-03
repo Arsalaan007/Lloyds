@@ -829,3 +829,9 @@ body.menu-open{overflow:hidden;}
 .fp-sound .fp-snd-off{display:none;}
 .fp-sound[aria-pressed="false"] .fp-snd-on{display:none;}
 .fp-sound[aria-pressed="false"] .fp-snd-off{display:block;}
+
+/* desktop: size the plan + lift + controls so they fit on one screen */
+@media(min-width:901px){
+  .floors{--fpw:clamp(720px,calc((100svh - 345px) * 1.7779 + clamp(72px,7.5vw,112px) + clamp(12px,2vw,32px)),1480px);}
+  .floors-wrap,.fp-info{max-width:var(--fpw);}
+}
