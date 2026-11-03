@@ -711,6 +711,15 @@ window.addEventListener('load', () => ScrollTrigger.refresh());
     placeCabin(true);
   }
 
+  /* safety net: if a browser fails to give the stage its height, set it from the image ratio */
+  function fixStageHeight() {
+    stage.style.height = '';
+    if (stage.offsetWidth && stage.offsetHeight < stage.offsetWidth * 0.3) stage.style.height = (stage.offsetWidth * 1449 / 2576) + 'px';
+  }
+  fixStageHeight();
+  window.addEventListener('resize', fixStageHeight);
+  window.addEventListener('load', fixStageHeight);
+
   /* controls */
   btns.forEach((b, k) => { b.tabIndex = k === 0 ? 0 : -1; b.addEventListener('click', () => go(k, true)); });
   upBtn.addEventListener('click', () => go(cur + 1, true));
