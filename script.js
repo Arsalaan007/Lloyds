@@ -27,22 +27,13 @@ if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
   });
 }
 
-/* ============ NAV: hide/show + progress + theme ============ */
+/* ============ NAV: always visible (sticky) + progress + theme ============ */
 const nav = document.getElementById('nav');
 const progressFillEl = document.getElementById('progressFill');
-let lastY = window.scrollY;
-let navHidden = false;
 ScrollTrigger.create({
   start: 0, end: 'max',
   onUpdate: (self) => {
     progressFillEl.style.transform = 'scaleY(' + self.progress.toFixed(4) + ')';
-    const y = window.scrollY;
-    const hide = y > lastY && y > 200;
-    if (hide !== navHidden) {
-      navHidden = hide;
-      nav.style.transform = hide ? 'translateY(-120%)' : 'translateY(0)';
-    }
-    lastY = y;
   }
 });
 
