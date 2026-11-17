@@ -741,6 +741,14 @@ window.addEventListener('load', () => ScrollTrigger.refresh());
   }
   rideBtn.addEventListener('click', () => { if (ride) stopRide(); else startRide(); });
 
+  /* the "Click the elevator…" hint starts the lift and brings it into view */
+  const hint = document.getElementById('floorsHint');
+  if (hint) hint.addEventListener('click', () => {
+    const y = stage.getBoundingClientRect().top + window.scrollY - 90;
+    window.scrollTo({ top: Math.max(0, y), behavior: calm ? 'auto' : 'smooth' });
+    if (!ride) startRide();
+  });
+
   /* auto-play the lift the first time the section scrolls into view; pause when it leaves */
   if (!calm) {
     let autoDone = false, autoRide = false;
@@ -751,6 +759,7 @@ window.addEventListener('load', () => ScrollTrigger.refresh());
       onLeaveBack: () => { if (autoRide && ride) { stopRide(); } autoRide = false; }
     });
     rideBtn.addEventListener('click', () => { autoRide = false; });
+    if (hint) hint.addEventListener('click', () => { autoRide = false; });
   }
 
   /* zoom (reuses the site lightbox) and swipe */

@@ -847,3 +847,7 @@ body.menu-open{overflow:hidden;}
 }
 .nav.on-light{background:rgba(255,255,255,.58);border-bottom-color:rgba(10,10,10,.08);}
 .nav:has(.nav-burger.is-active){background:transparent;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;}
+
+button.floors-hint{background:none;border:0;padding:0;font-family:inherit;cursor:pointer;transition:color .3s;-webkit-tap-highlight-color:transparent;}
+@media(hover:hover){button.floors-hint:hover{color:#6e4d0c;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px;}}
+button.floors-hint:focus-visible{outline:1px solid #9a6f1c;outline-offset:6px;}
