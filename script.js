@@ -240,19 +240,6 @@ document.querySelectorAll('.arch-stat-num').forEach(el => {
   });
 });
 
-/* ============ POOL day/dusk wipe (interactive compare-slider) ============ */
-ScrollTrigger.create({
-  trigger: '.pool-frame',
-  start: 'top 70%',
-  end: 'bottom 30%',
-  scrub: 0.6,
-  onUpdate: (self) => {
-    const pct = 100 - self.progress * 100;
-    document.getElementById('poolDusk').style.clipPath = `inset(0 0 0 ${pct}%)`;
-    document.getElementById('poolDivider').style.left = pct + '%';
-  }
-});
-
 /* ============ FEATURE media parallax ============ */
 /* (skips wellness's stacked full images — parallax needs oversized/cropped
    images to shift within, which is incompatible with showing them full-size) */
