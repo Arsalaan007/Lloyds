@@ -837,3 +837,13 @@ body.menu-open{overflow:hidden;}
 .floors-hint{display:block;text-align:center;margin:18px auto 0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#9a6f1c;line-height:1.5;}
 .floors-hint::before{content:'';display:inline-block;vertical-align:-1px;margin-right:10px;width:9px;height:12px;border-radius:2px;background:linear-gradient(180deg,#ecc87e,#b8862a);box-shadow:0 0 0 1px rgba(233,196,122,.6);}
 @media(max-width:560px){.floors-hint{font-size:11px;letter-spacing:.12em;}}
+
+/* nav: frosted-glass background so the menu stays readable over any section */
+.nav{
+  background:rgba(10,10,10,.42);
+  -webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);
+  border-bottom:1px solid rgba(255,255,255,.12);
+  transition:transform .45s var(--ease),background-color .4s var(--ease),border-color .4s var(--ease);
+}
+.nav.on-light{background:rgba(255,255,255,.58);border-bottom-color:rgba(10,10,10,.08);}
+.nav:has(.nav-burger.is-active){background:transparent;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;}
