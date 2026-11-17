@@ -842,3 +842,8 @@ button.floors-hint:focus-visible{outline:1px solid #9a6f1c;outline-offset:6px;}
 :root{--nav-h:80px;}
 .hero{margin-top:var(--nav-h);box-shadow:0 calc(-1 * var(--nav-h)) 0 0 var(--black);}
 @media(max-width:600px){.hero{aspect-ratio:2/3;height:auto;min-height:0;}.hero-media img{object-position:center;}}
+
+/* 24-inch desktop screens (about 1800-2300px wide): wider, shorter banner so it fits the visible screen */
+@media(min-width:1800px) and (max-width:2300px){
+  .hero{aspect-ratio:2560/1160;max-height:calc(100vh - var(--nav-h));max-height:calc(100svh - var(--nav-h));}
+}
