@@ -1,5 +1,14 @@
 gsap.registerPlugin(ScrollTrigger);
 
+/* keep the hero banner clear of the sticky nav */
+(function () {
+  const navEl = document.getElementById('nav');
+  const setNavH = () => document.documentElement.style.setProperty('--nav-h', navEl.offsetHeight + 'px');
+  setNavH();
+  window.addEventListener('resize', setNavH);
+  window.addEventListener('load', () => { setNavH(); ScrollTrigger.refresh(); });
+})();
+
 /* ============ NAV: always visible (sticky) + progress + theme ============ */
 const nav = document.getElementById('nav');
 const progressFillEl = document.getElementById('progressFill');
