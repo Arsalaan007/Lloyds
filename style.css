@@ -836,3 +836,9 @@ body.menu-open{overflow:hidden;}
   .floors{--fpw:clamp(720px,calc((100svh - 345px) * 1.7779 + clamp(72px,7.5vw,112px) + clamp(12px,2vw,32px)),1480px);}
   .floors-wrap,.fp-info{max-width:var(--fpw);}
 }
+
+/* residences: floor plan fills the section and fits one screen, no side info */
+.res-panels{max-width:min(1480px,100%);}
+.res-panel,.res-panel.is-active{grid-template-columns:1fr;gap:0;justify-items:center;}
+.res-panel-media{width:fit-content;max-width:100%;}
+.res-panel-media img{width:auto;max-width:100%;height:auto;max-height:calc(100vh - 150px);max-height:calc(100svh - 150px);margin:0 auto;}
