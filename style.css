@@ -854,4 +854,5 @@ button.floors-hint:focus-visible{outline:1px solid #9a6f1c;outline-offset:6px;}
 .nav-logo--dark{display:none;}
 .nav.on-light .nav-logo--light{display:none;}
 .nav.on-light .nav-logo--dark{display:block;}
-@media(max-width:600px){.nav-logo{height:40px;margin:-8px 0;}}
+@media(max-width:600px){.nav-logo{height:54px;margin:-15px 0;}}
+@media(max-width:600px){.nav{padding-top:30px;padding-bottom:30px;}}
