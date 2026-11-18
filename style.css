@@ -847,3 +847,11 @@ button.floors-hint:focus-visible{outline:1px solid #9a6f1c;outline-offset:6px;}
 @media(min-width:1800px) and (max-width:2300px){
   .hero{aspect-ratio:2560/1160;max-height:calc(100vh - var(--nav-h));max-height:calc(100svh - var(--nav-h));}
 }
+
+/* Nav: original logo instead of text */
+.nav-mark{display:flex;align-items:center;line-height:0;}
+.nav-logo{height:48px;width:auto;display:block;margin:-11px 0;}
+.nav-logo--dark{display:none;}
+.nav.on-light .nav-logo--light{display:none;}
+.nav.on-light .nav-logo--dark{display:block;}
+@media(max-width:600px){.nav-logo{height:40px;margin:-8px 0;}}
