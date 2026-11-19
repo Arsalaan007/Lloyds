@@ -856,3 +856,4 @@ button.floors-hint:focus-visible{outline:1px solid #9a6f1c;outline-offset:6px;}
 .nav.on-light .nav-logo--dark{display:block;}
 @media(max-width:600px){.nav-logo{height:54px;margin:-15px 0;}}
 @media(max-width:600px){.nav{padding-top:30px;padding-bottom:30px;}}
+.enquire-submit:disabled{opacity:.6;cursor:default;}.enquire-note.is-error{color:#e8b4b4;}

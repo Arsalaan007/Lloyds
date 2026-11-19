@@ -461,31 +461,69 @@ variantBtns.forEach(btn => {
   });
 });
 
-/* ============ ENQUIRE FORM (mailto submission) ============ */
+/* ============ ENQUIRE FORM (sent straight to the sales inbox, no email app) ============ */
 const form = document.getElementById('enquireForm');
 const ENQUIRE_EMAIL = 'arsalaan.khan1@gmail.com';
-form.addEventListener('submit', (e) => {
+const ENQUIRE_ENDPOINT = 'https://formsubmit.co/ajax/' + ENQUIRE_EMAIL;
+const DRAFT_KEY = 'solaceEnquiryDraft';
+const fields = ['fname', 'fphone', 'femail'].map(id => document.getElementById(id));
+const note = document.getElementById('enquireNote');
+const submitBtn = form.querySelector('.enquire-submit');
+const submitLabel = submitBtn.textContent;
+
+/* keep what the visitor typed if they leave and come back */
+try {
+  const d = JSON.parse(sessionStorage.getItem(DRAFT_KEY) || '{}');
+  fields.forEach(f => { if (d[f.id]) f.value = d[f.id]; });
+} catch (_) {}
+form.addEventListener('input', () => {
+  try {
+    const d = {}; fields.forEach(f => d[f.id] = f.value);
+    sessionStorage.setItem(DRAFT_KEY, JSON.stringify(d));
+  } catch (_) {}
+});
+
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const note = document.getElementById('enquireNote');
-  const name = document.getElementById('fname').value.trim();
-  const phone = document.getElementById('fphone').value.trim();
-  const email = document.getElementById('femail').value.trim();
+  const name = fields[0].value.trim();
+  const phone = fields[1].value.trim();
+  const email = fields[2].value.trim();
 
-  const subject = `Site Visit Request — Solace (${name})`;
-  const bodyLines = [
-    `Name: ${name}`,
-    `Phone: ${phone}`,
-    `Email: ${email || 'Not provided'}`,
-    '',
-    'Requesting a site visit for Solace.'
-  ];
-  const mailtoUrl =
-    `mailto:${ENQUIRE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending…';
+  note.hidden = true;
+  note.classList.remove('is-error');
 
-  window.location.href = mailtoUrl;
+  try {
+    const res = await fetch(ENQUIRE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: `Site Visit Request — Solace (${name})`,
+        _template: 'table',
+        _captcha: 'false',
+        Name: name,
+        Phone: phone,
+        Email: email || 'Not provided',
+        Message: 'Requesting a site visit for Solace.'
+      })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || data.success === 'false' || data.success === false) throw new Error('send failed');
 
-  form.style.display = 'none';
-  note.hidden = false;
+    try { sessionStorage.removeItem(DRAFT_KEY); } catch (_) {}
+    form.reset();
+    form.style.display = 'none';
+    note.textContent = 'Thank you — your request has been sent. Our sales team will call you within the day.';
+    note.hidden = false;
+  } catch (err) {
+    /* details stay in the fields so nothing is lost */
+    note.textContent = 'Sorry, we couldn’t send that just now. Please check your connection and try again.';
+    note.classList.add('is-error');
+    note.hidden = false;
+    submitBtn.disabled = false;
+    submitBtn.textContent = submitLabel;
+  }
 });
 
 /* refresh ScrollTrigger after images load (layout shifts) */
