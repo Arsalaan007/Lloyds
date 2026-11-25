@@ -845,7 +845,10 @@ button.floors-hint:focus-visible{outline:1px solid #9a6f1c;outline-offset:6px;}
 
 /* 24-inch desktop screens (about 1800-2300px wide): wider, shorter banner so it fits the visible screen */
 @media(min-width:1800px) and (max-width:2300px){
-  .hero{aspect-ratio:2560/1160;max-height:calc(100vh - var(--nav-h));max-height:calc(100svh - var(--nav-h));}
+  /* fill the screen below the nav: no black strip under the banner.
+     Any extra width is trimmed from the left only, so the Lloyds mark on the right stays in. */
+  .hero{aspect-ratio:auto;min-height:0;height:min(calc(100vh - var(--nav-h)), 54vw);height:min(calc(100svh - var(--nav-h)), 54vw);}
+  .hero-media img{object-fit:cover;object-position:100% 50%;}
 }
 
 /* Nav: original logo instead of text */
