@@ -868,3 +868,9 @@ button.floors-hint:focus-visible{outline:1px solid #9a6f1c;outline-offset:6px;}
   .arch-pin{padding-top:clamp(56px,12vw,90px);padding-bottom:0;}
   .arch-copy{padding:10vw 6vw clamp(56px,12vw,90px);}
 }
+
+/* Tower copy: centred block in its column, even space left and right */
+@media(min-width:901px){
+  .arch-copy{max-width:none;padding-left:4vw;padding-right:4vw;align-items:center;}
+  .arch-copy>*{width:100%;max-width:clamp(360px,34vw,660px);}
+}
