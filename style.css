@@ -857,3 +857,11 @@ button.floors-hint:focus-visible{outline:1px solid #9a6f1c;outline-offset:6px;}
 @media(max-width:600px){.nav-logo{height:54px;margin:-15px 0;}}
 @media(max-width:600px){.nav{padding-top:30px;padding-bottom:30px;}}
 .enquire-submit:disabled{opacity:.6;cursor:default;}.enquire-note.is-error{color:#e8b4b4;}
+
+/* Tower section: no sticky/parallax text, even breathing room top and bottom */
+.arch-pin{align-items:center;padding-top:clamp(72px,9vw,150px);padding-bottom:clamp(72px,9vw,150px);}
+.arch-copy{position:static;top:auto;align-self:center;padding-top:0;padding-bottom:0;}
+@media(max-width:900px){
+  .arch-pin{padding-top:clamp(56px,12vw,90px);padding-bottom:0;}
+  .arch-copy{padding:10vw 6vw clamp(56px,12vw,90px);}
+}

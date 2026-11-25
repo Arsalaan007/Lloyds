@@ -509,7 +509,7 @@ form.addEventListener('submit', async (e) => {
       })
     });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok || data.success === 'false' || data.success === false) throw new Error('send failed');
+    if (!res.ok || data.success === 'false' || data.success === false) throw new Error(data.message || ('HTTP ' + res.status));
 
     try { sessionStorage.removeItem(DRAFT_KEY); } catch (_) {}
     form.reset();
@@ -518,7 +518,8 @@ form.addEventListener('submit', async (e) => {
     note.hidden = false;
   } catch (err) {
     /* details stay in the fields so nothing is lost */
-    note.textContent = 'Sorry, we couldn’t send that just now. Please check your connection and try again.';
+    console.warn('Enquiry send failed:', err && err.message);
+    note.textContent = 'Sorry, we couldn’t send that just now. Please try again in a moment.' + (err && err.message && err.message !== 'Failed to fetch' ? ' (' + err.message + ')' : '');
     note.classList.add('is-error');
     note.hidden = false;
     submitBtn.disabled = false;
